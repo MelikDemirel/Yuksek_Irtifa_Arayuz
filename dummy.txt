@@ -1,0 +1,222 @@
+#include <Arduino.h>
+
+#define SERIAL_BAUD 9600
+
+struct DataStruct {
+  uint8_t basla;
+  uint8_t zaman;#include <Arduino.h>
+
+#define SERIAL_BAUD 9600
+
+struct DataStruct {
+  uint8_t basla;
+  uint8_t zaman;
+  uint8_t durum;
+  int8_t sicaklik;
+  uint16_t voltaj;
+  uint16_t akim;
+  float yukseklik_p;
+  float yukseklik_gps;
+  float lat;
+  float lon;
+  float gyroX;
+  float gyroY;
+  float gyroZ;
+  float accX;
+  float accY;
+  float accZ;
+  float aci;
+  uint8_t nem;
+  uint8_t pitch;
+  uint8_t roll;
+  uint8_t yaw;
+  int16_t hiz;
+  int16_t maxAltitude;
+  uint8_t uyduSayisi;
+  uint8_t checkSum;
+  uint8_t CR;
+  uint8_t LF;
+};
+
+union DataPack {
+  uint8_t arr[64];
+  DataStruct dataYapi;
+};
+
+DataPack veriler;
+
+uint8_t calculateCRC() {
+  int sum = 0;
+  for (int i = 1; i < sizeof(DataStruct) - 3; i++) {
+    sum += veriler.arr[i];
+  }
+  return (uint8_t)(sum % 256);
+}
+
+void setup() {
+  Serial.begin(SERIAL_BAUD);
+  delay(1000);
+}
+
+void loop() {
+  static uint8_t sayac = 0;
+
+  veriler.dataYapi.basla = 0xFF;
+
+  uint8_t dakika = sayac % 60;
+  uint8_t saniye = sayac % 60;
+  uint8_t durum = (sayac % 8) + 1;
+
+  veriler.dataYapi.zaman = (dakika << 2) | ((saniye >> 4) & 0x03);
+  veriler.dataYapi.durum = ((saniye & 0x0F) << 4) | (durum & 0x0F);
+
+  veriler.dataYapi.sicaklik = random(200, 300);    // 40-60 °C
+  veriler.dataYapi.voltaj = random(1100, 1300);    // 11.0V - 13.0V
+  veriler.dataYapi.akim = random(100, 500);        // 1A - 5A
+
+  veriler.dataYapi.yukseklik_p = 200 + sayac;
+  veriler.dataYapi.yukseklik_gps = 198 + sayac;
+
+  veriler.dataYapi.lat = 40.195 + random(-100, 100) / 10000.0;
+  veriler.dataYapi.lon = 29.061 + random(-100, 100) / 10000.0;
+
+  veriler.dataYapi.gyroX = random(-300, 300) / 10.0;
+  veriler.dataYapi.gyroY = random(-300, 300) / 10.0;
+  veriler.dataYapi.gyroZ = random(-300, 300) / 10.0;
+
+  veriler.dataYapi.accX = random(-1000, 1000) / 100.0;
+  veriler.dataYapi.accY = random(-1000, 1000) / 100.0;
+  veriler.dataYapi.accZ = random(-1000, 1000) / 100.0;
+
+  veriler.dataYapi.aci = random(-900, 900) / 10.0;
+
+  veriler.dataYapi.nem = random(40, 80);
+
+  veriler.dataYapi.pitch = random(0, 90);
+  veriler.dataYapi.roll = random(0, 90);
+  veriler.dataYapi.yaw = random(0, 90);
+
+  veriler.dataYapi.hiz = random(0, 400);           // 0–40 m/s
+  veriler.dataYapi.maxAltitude = 250 + sayac;
+
+  uint8_t uydu = (random(5, 15) << 3);  // 5–15 uydu sayısı (üst 5 bit)
+  uydu |= ((veriler.dataYapi.pitch & 0x80) >> 5); // bit 2
+  uydu |= ((veriler.dataYapi.roll  & 0x80) >> 6); // bit 1
+  uydu |= ((veriler.dataYapi.yaw   & 0x80) >> 7); // bit 0
+  veriler.dataYapi.uyduSayisi = uydu;
+
+  veriler.dataYapi.checkSum = calculateCRC();
+  veriler.dataYapi.CR = '\r';
+  veriler.dataYapi.LF = '\n';
+
+  // Paket gönder
+  Serial.write(veriler.arr, sizeof(veriler.arr));
+
+  sayac++;
+  delay(1000);
+}
+
+  uint8_t durum;
+  int8_t sicaklik;
+  uint16_t voltaj;
+  uint16_t akim;
+  float yukseklik_p;
+  float yukseklik_gps;
+  float lat;
+  float lon;
+  float gyroX;
+  float gyroY;
+  float gyroZ;
+  float accX;
+  float accY;
+  float accZ;
+  float aci;
+  uint8_t nem;
+  uint8_t pitch;
+  uint8_t roll;
+  uint8_t yaw;
+  int16_t hiz;
+  int16_t maxAltitude;
+  uint8_t uyduSayisi;
+  uint8_t checkSum;
+  uint8_t CR;
+  uint8_t LF;
+};
+
+union DataPack {
+  uint8_t arr[64];
+  DataStruct dataYapi;
+};
+
+DataPack veriler;
+
+uint8_t calculateCRC() {
+  int sum = 0;
+  for (int i = 1; i < sizeof(DataStruct) - 3; i++) {
+    sum += veriler.arr[i];
+  }
+  return (uint8_t)(sum % 256);
+}
+
+void setup() {
+  Serial.begin(SERIAL_BAUD);
+  delay(1000);
+}
+
+void loop() {
+  static uint8_t sayac = 0;
+
+  veriler.dataYapi.basla = 0xFF;
+
+  uint8_t dakika = sayac % 60;
+  uint8_t saniye = sayac % 60;
+  uint8_t durum = (sayac % 8) + 1;
+
+  veriler.dataYapi.zaman = (dakika << 2) | ((saniye >> 4) & 0x03);
+  veriler.dataYapi.durum = ((saniye & 0x0F) << 4) | (durum & 0x0F);
+
+  veriler.dataYapi.sicaklik = random(200, 300);    // 40-60 °C
+  veriler.dataYapi.voltaj = random(1100, 1300);    // 11.0V - 13.0V
+  veriler.dataYapi.akim = random(100, 500);        // 1A - 5A
+
+  veriler.dataYapi.yukseklik_p = 200 + sayac;
+  veriler.dataYapi.yukseklik_gps = 198 + sayac;
+
+  veriler.dataYapi.lat = 40.195 + random(-100, 100) / 10000.0;
+  veriler.dataYapi.lon = 29.061 + random(-100, 100) / 10000.0;
+
+  veriler.dataYapi.gyroX = random(-300, 300) / 10.0;
+  veriler.dataYapi.gyroY = random(-300, 300) / 10.0;
+  veriler.dataYapi.gyroZ = random(-300, 300) / 10.0;
+
+  veriler.dataYapi.accX = random(-1000, 1000) / 100.0;
+  veriler.dataYapi.accY = random(-1000, 1000) / 100.0;
+  veriler.dataYapi.accZ = random(-1000, 1000) / 100.0;
+
+  veriler.dataYapi.aci = random(-900, 900) / 10.0;
+
+  veriler.dataYapi.nem = random(40, 80);
+
+  veriler.dataYapi.pitch = random(0, 90);
+  veriler.dataYapi.roll = random(0, 90);
+  veriler.dataYapi.yaw = random(0, 90);
+
+  veriler.dataYapi.hiz = random(0, 400);           // 0–40 m/s
+  veriler.dataYapi.maxAltitude = 250 + sayac;
+
+  uint8_t uydu = (random(5, 15) << 3);  // 5–15 uydu sayısı (üst 5 bit)
+  uydu |= ((veriler.dataYapi.pitch & 0x80) >> 5); // bit 2
+  uydu |= ((veriler.dataYapi.roll  & 0x80) >> 6); // bit 1
+  uydu |= ((veriler.dataYapi.yaw   & 0x80) >> 7); // bit 0
+  veriler.dataYapi.uyduSayisi = uydu;
+
+  veriler.dataYapi.checkSum = calculateCRC();
+  veriler.dataYapi.CR = '\r';
+  veriler.dataYapi.LF = '\n';
+
+  // Paket gönder
+  Serial.write(veriler.arr, sizeof(veriler.arr));
+
+  sayac++;
+  delay(1000);
+}
