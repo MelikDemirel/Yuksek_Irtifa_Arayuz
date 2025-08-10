@@ -13,31 +13,34 @@ namespace GokhanUI
         private readonly TimeSpan _timeout = TimeSpan.FromSeconds(5);
         private const int PacketSize = 64;
 
-        public byte Status { get; private set; }//
-        public ushort Voltage { get; private set; }//
-        public ushort Current { get; private set; }//
-        public float Pitch { get; private set; }//
-        public float Roll { get; private set; }//
-        public float Yaw { get; private set; }//
-        public float AccelX { get; private set; }//
-        public float AccelY { get; private set; }//
-        public float AccelZ { get; private set; }//
-        public float Angle { get; private set; }//
-        public float Altitude { get; private set; }//
-        public float GPSAltitude { get; private set; }//
-        public float Latitude { get; private set; }//
-        public float Longitude { get; private set; }//
-        public float GyroX { get; private set; }//
-        public float GyroY { get; private set; }//
-        public float GyroZ { get; private set; }//
-        public float Temperature { get; private set; }//
-        public byte Humidity { get; private set; }//
-        public float Velocity { get; private set; }//
-        public short MaxAltitude { get; private set; } //
-        public byte SatelliteCount { get; private set; }//
-        public byte CRC { get; private set; }//
+        public byte Status { get; private set; }
+        public float Voltage { get; private set; }
+        public ushort Current { get; private set; }
+        public float Pitch { get; private set; }
+        public float Roll { get; private set; }
+        public float Yaw { get; private set; }
+        public float AccelX { get; private set; }
+        public float AccelY { get; private set; }
+        public float AccelZ { get; private set; }
+        public float Angle { get; private set; }
+        public float Altitude { get; private set; }
+        public float GPSAltitude { get; private set; }
+        public float Latitude { get; private set; }
+        public float Longitude { get; private set; }
+        public float GyroX { get; private set; }
+        public float GyroY { get; private set; }
+        public float GyroZ { get; private set; }
+        public float Temperature { get; private set; }
+        public byte Humidity { get; private set; }
+        public float Velocity { get; private set; }
+        public short MaxAltitude { get; private set; }
+        public byte SatelliteCount { get; private set; }
+        public byte CRC { get; private set; }
 
         public bool IsOpen => _serialPort?.IsOpen ?? false;
+
+        public int Dakika { get; private set; }
+        public int Saniye { get; private set; }
 
         public ArduinoSerialReader(string portName, int baudRate)
         {
@@ -54,13 +57,11 @@ namespace GokhanUI
                     _serialPort.Open();
                     _serialPort.DiscardInBuffer();
                     Console.WriteLine("🟢 Roket bağlantısı açıldı.");
-                    LogError("Roket bağlantısı açıldı.");
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"⚠ Seri port açılırken hata oluştu: {ex.Message}");
-                LogError($"Seri port açılırken hata: {ex.Message}");
             }
         }
 
@@ -70,7 +71,6 @@ namespace GokhanUI
             {
                 _serialPort.Close();
                 Console.WriteLine("🔴 Roket bağlantısı kapatıldı.");
-                LogError("Roket bağlantısı kapatıldı.");
             }
         }
 
@@ -79,8 +79,7 @@ namespace GokhanUI
             if (_serialPort == null || !_serialPort.IsOpen)
             {
                 Console.WriteLine("⚠ Port kapalı, yeniden bağlanma deneniyor.");
-                LogError("Port kapalı, yeniden bağlanma deneniyor.");
-                try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); LogError($"Yeniden bağlanma başarısız: {ex.Message}"); }
+                try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
                 return;
             }
 
@@ -89,10 +88,9 @@ namespace GokhanUI
                 try
                 {
                     // Buffer kontrolünü daha sık yap
-                    if (_serialPort.BytesToRead > PacketSize * 5) // 10 yerine 5 yaparak daha sık temizleme
+                    if (_serialPort.BytesToRead > PacketSize * 5)
                     {
                         Console.WriteLine("⚠ Buffer doluyor, temizleniyor.");
-                        LogError($"Buffer doluyor, temizleniyor. BytesToRead: {_serialPort.BytesToRead}");
                         _serialPort.DiscardInBuffer();
                     }
 
@@ -105,7 +103,6 @@ namespace GokhanUI
                         if (bytesRead != PacketSize)
                         {
                             Console.WriteLine($"⚠ Eksik veri alındı: {bytesRead} bayt.");
-                            LogError($"Eksik veri alındı: {bytesRead} bayt.");
                             continue;
                         }
 
@@ -122,7 +119,6 @@ namespace GokhanUI
                             else
                             {
                                 Console.WriteLine("❌ CRC hatası: Paket bozuk.");
-                                LogError($"CRC hatası: Alınan CRC={receivedCrc}, Hesaplanan CRC={calculatedCrc}");
                                 _serialPort.DiscardInBuffer();
                                 continue;
                             }
@@ -130,7 +126,6 @@ namespace GokhanUI
                         else
                         {
                             Console.WriteLine("⚠ Paket yapısı geçersiz.");
-                            LogError($"Paket yapısı geçersiz: Başlangıç={buffer[0]}, Bitiş={buffer[PacketSize - 2]}{buffer[PacketSize - 1]}");
                             _serialPort.DiscardInBuffer();
                             continue;
                         }
@@ -139,22 +134,19 @@ namespace GokhanUI
                     if (DateTime.Now - _lastDataReceived > _timeout)
                     {
                         Console.WriteLine("⚠ Veri akışı kesildi, port kontrol ediliyor.");
-                        LogError("Veri akışı kesildi, port kontrol ediliyor.");
                         Close();
-                        try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); LogError($"Yeniden bağlanma başarısız: {ex.Message}"); }
+                        try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
                     }
                 }
                 catch (IOException ioex)
                 {
                     Console.WriteLine($"⚠ IO Hatası: {ioex.Message}");
-                    LogError($"IO Hatası: {ioex.Message}, StackTrace: {ioex.StackTrace}");
                     Close();
-                    try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); LogError($"Yeniden bağlanma başarısız: {ex.Message}"); }
+                    try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"⚠ Veri ayrıştırılamadı: {ex.Message}");
-                    LogError($"Veri ayrıştırılamadı: {ex.Message}, StackTrace: {ex.StackTrace}");
                 }
             });
         }
@@ -169,7 +161,7 @@ namespace GokhanUI
             byte rawTemp = buffer[i++];
             Temperature = rawTemp / 5.0f;
 
-            Voltage = BitConverter.ToUInt16(buffer, i); i += 2;
+            float HamVoltage = BitConverter.ToUInt16(buffer, i); i += 2;
             Current = BitConverter.ToUInt16(buffer, i); i += 2;
 
             Altitude = BitConverter.ToSingle(buffer, i); i += 4;
@@ -202,6 +194,10 @@ namespace GokhanUI
 
             int dakika = zaman >> 2;
             int saniye = ((zaman & 0x03) << 4) | (durum >> 4);
+
+            Dakika = dakika;
+            Saniye = saniye;
+
             Status = (byte)(durum & 0x0F);
             Velocity = rawVelocity / 10.0f;
 
@@ -214,6 +210,7 @@ namespace GokhanUI
             Yaw = rawYaw * signYaw;
 
             SatelliteCount = (byte)(uyduData >> 3);
+            Voltage = HamVoltage / 100;
         }
 
         private byte CalculateChecksum(byte[] data, int start, int end)
@@ -224,11 +221,6 @@ namespace GokhanUI
                 sum += data[i];
             }
             return sum;
-        }
-
-        private void LogError(string message)
-        {
-            File.AppendAllText("error_log.txt", $"{DateTime.Now}: {message}\n");
         }
 
         public void Dispose()

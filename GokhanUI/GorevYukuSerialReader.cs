@@ -57,13 +57,11 @@ namespace GokhanUI
                     _serialPort.Open();
                     _serialPort.DiscardInBuffer();
                     Console.WriteLine("🟢 Görev yükü bağlantısı açıldı.");
-                    LogError("Görev yükü bağlantısı açıldı.");
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"⚠ Seri port açılırken hata oluştu: {ex.Message}");
-                LogError($"Seri port açılırken hata: {ex.Message}");
             }
         }
 
@@ -73,7 +71,6 @@ namespace GokhanUI
             {
                 _serialPort.Close();
                 Console.WriteLine("🔴 Görev yükü bağlantısı kapatıldı.");
-                LogError("Görev yükü bağlantısı kapatıldı.");
             }
         }
 
@@ -82,8 +79,7 @@ namespace GokhanUI
             if (_serialPort == null || !_serialPort.IsOpen)
             {
                 Console.WriteLine("⚠ Port kapalı, yeniden bağlanma deneniyor.");
-                LogError("Port kapalı, yeniden bağlanma deneniyor.");
-                try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); LogError($"Yeniden bağlanma başarısız: {ex.Message}"); }
+                try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
                 return;
             }
 
@@ -92,10 +88,9 @@ namespace GokhanUI
                 try
                 {
                     // Buffer kontrolünü daha sık yap
-                    if (_serialPort.BytesToRead > PacketSize * 5) // 10 yerine 5 yaparak daha sık temizleme
+                    if (_serialPort.BytesToRead > PacketSize * 5)
                     {
                         Console.WriteLine("⚠ Buffer doluyor, temizleniyor.");
-                        LogError($"Buffer doluyor, temizleniyor. BytesToRead: {_serialPort.BytesToRead}");
                         _serialPort.DiscardInBuffer();
                     }
 
@@ -108,7 +103,6 @@ namespace GokhanUI
                         if (bytesRead != PacketSize)
                         {
                             Console.WriteLine($"⚠ Eksik veri alındı: {bytesRead} bayt.");
-                            LogError($"Eksik veri alındı: {bytesRead} bayt.");
                             continue;
                         }
 
@@ -125,7 +119,6 @@ namespace GokhanUI
                             else
                             {
                                 Console.WriteLine("❌ CRC hatası: Paket bozuk.");
-                                LogError($"CRC hatası: Alınan CRC={receivedCrc}, Hesaplanan CRC={calculatedCrc}");
                                 _serialPort.DiscardInBuffer();
                                 continue;
                             }
@@ -133,7 +126,6 @@ namespace GokhanUI
                         else
                         {
                             Console.WriteLine("⚠ Paket yapısı geçersiz.");
-                            LogError($"Paket yapısı geçersiz: Başlangıç={buffer[0]}, Bitiş={buffer[PacketSize - 2]}{buffer[PacketSize - 1]}");
                             _serialPort.DiscardInBuffer();
                             continue;
                         }
@@ -142,22 +134,19 @@ namespace GokhanUI
                     if (DateTime.Now - _lastDataReceived > _timeout)
                     {
                         Console.WriteLine("⚠ Veri akışı kesildi, port kontrol ediliyor.");
-                        LogError("Veri akışı kesildi, port kontrol ediliyor.");
                         Close();
-                        try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); LogError($"Yeniden bağlanma başarısız: {ex.Message}"); }
+                        try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
                     }
                 }
                 catch (IOException ioex)
                 {
                     Console.WriteLine($"⚠ IO Hatası: {ioex.Message}");
-                    LogError($"IO Hatası: {ioex.Message}, StackTrace: {ioex.StackTrace}");
                     Close();
-                    try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); LogError($"Yeniden bağlanma başarısız: {ex.Message}"); }
+                    try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"⚠ Veri ayrıştırılamadı: {ex.Message}");
-                    LogError($"Veri ayrıştırılamadı: {ex.Message}, StackTrace: {ex.StackTrace}");
                 }
             });
         }
@@ -205,6 +194,10 @@ namespace GokhanUI
 
             int dakika = zaman >> 2;
             int saniye = ((zaman & 0x03) << 4) | (durum >> 4);
+
+            Dakika = dakika;
+            Saniye = saniye;
+
             Status = (byte)(durum & 0x0F);
             Velocity = rawVelocity / 10.0f;
 
@@ -227,11 +220,6 @@ namespace GokhanUI
                 sum += data[i];
             }
             return sum;
-        }
-
-        private void LogError(string message)
-        {
-            File.AppendAllText("error_log.txt", $"{DateTime.Now}: {message}\n");
         }
 
         public void Dispose()

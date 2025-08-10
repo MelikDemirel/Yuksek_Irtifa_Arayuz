@@ -61,8 +61,8 @@ namespace GokhanUI
 
             gaugeVoltage.Caption = "Voltaj";
             gaugeVoltage.Unit = "mV";
-            gaugeVoltage.Min = 0;
-            gaugeVoltage.Max = 5000;
+            gaugeVoltage.Min = 10.5f;
+            gaugeVoltage.Max = 12.6f;
             gaugeVoltage.Value = 0;
             gaugeVoltage.BarColor = Color.Cyan;
 
@@ -227,11 +227,33 @@ namespace GokhanUI
 
             try
             {
+
+
                 UpdateRocketStatus(_serialReader.Status);
+
+                float gaugeAlt = _serialReader.Altitude;
+                float gaugeAng = _serialReader.Angle;
+                float gaugeVolt = _serialReader.Voltage;
+
+                if(gaugeAlt < 0.5)
+                    gaugeAltitude.Value = 0.0f;
+                else if (gaugeAlt > 9000)
+                    gaugeAltitude.Value = 9000;
+                else
+                    gaugeAltitude.Value = gaugeAlt;
+
+                if (gaugeVolt < 10.5)
+                    gaugeVoltage.Value = 10.5f;
+                else if (gaugeVolt > 12.6)
+                    gaugeVoltage.Value = 12.6f;
+                else
+                    gaugeVoltage.Value = gaugeVolt;
                 // Gauge güncellemeleri (EKLENECEK)
-                gaugeAltitude.Value = _serialReader.Altitude;
                 gaugeAngle.Value = _serialReader.Angle;
-                gaugeVoltage.Value = _serialReader.Voltage;
+                gaugeVoltage.Text = gaugeVolt.ToString("F2") + " V";
+                gaugeAltitude.Text = gaugeAlt.ToString("F0") + " m";
+
+
 
                 // Gauge'ları yeniden çizmek için Invalidate çağır
                 gaugeAltitude.Invalidate();
@@ -284,6 +306,8 @@ namespace GokhanUI
                     updates.Add(() => txtBoxRoketGyroY.Text = _serialReader.GyroY.ToString("F2"));
                 if (txtBoxRoketGyroZ.Text != _serialReader.GyroZ.ToString("F2"))
                     updates.Add(() => txtBoxRoketGyroZ.Text = _serialReader.GyroZ.ToString("F2"));
+                if (txtBoxRoketZaman.Text != $"{_serialReader.Dakika:D2}:{_serialReader.Saniye:D2}")
+                    txtBoxRoketZaman.Text = $"{_serialReader.Dakika:D2}:{_serialReader.Saniye:D2}";
 
                 foreach (var update in updates)
                     update();
@@ -303,9 +327,10 @@ namespace GokhanUI
 
                 UpdateCharts();
             }
+
             catch (Exception ex)
             {
-                LogError($"UI güncelleme hatası: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
         private void UpdateGorevYukuUI()
@@ -395,30 +420,31 @@ namespace GokhanUI
             {
                 if (_serialReader != null && !_serialReader.IsOpen && !_isManualClose)
                 {
-                    LogError("Roket portu kapalı, yeniden bağlanma deneniyor.");
-                    try { _serialReader.Open(); } catch (Exception ex) { LogError($"Roket portu yeniden bağlanma başarısız: {ex.Message}"); }
+                    try
+                    {
+                        _serialReader.Open();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Roket portu açılırken hata oluştu: {ex.Message}", "Port Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 if (_gorevYukuReader != null && !_gorevYukuReader.IsOpen && !_isManualClose)
                 {
-                    LogError("Görev yükü portu kapalı, yeniden bağlanma deneniyor.");
-                    try { _gorevYukuReader.Open(); } catch (Exception ex) { LogError($"Görev yükü portu yeniden bağlanma başarısız: {ex.Message}"); }
+                    try
+                    {
+                        _gorevYukuReader.Open();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Görev yükü portu açılırken hata oluştu: {ex.Message}", "Port Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 await Task.Delay(5000);
             }
         }
 
-        private void LogError(string message)
-        {
-            File.AppendAllText("error_log.txt", $"{DateTime.Now}: {message}\n");
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => MessageBox.Show(message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error)));
-            }
-            else
-            {
-                MessageBox.Show(message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+
 
         private void button5_Click(object sender, EventArgs e)
         {
