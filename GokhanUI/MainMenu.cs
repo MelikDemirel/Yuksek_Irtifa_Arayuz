@@ -85,7 +85,7 @@ namespace GokhanUI
             chart3.ChartAreas[0].BackColor = Color.White;
             chart3.ChartAreas[0].AxisX.Title = "Zaman";
             chart3.ChartAreas[0].AxisX.TitleForeColor = Color.Black;
-            chart3.ChartAreas[0].AxisY.Title = "Sıcaklık (°C)";
+            chart3.ChartAreas[0].AxisY.Title = "AÇI";
             chart3.ChartAreas[0].AxisY.TitleForeColor = Color.Black;
             chart3.Series[0].Color = Color.Lime;
         }
@@ -218,6 +218,7 @@ namespace GokhanUI
 
         private async void UpdateUI()
         {
+
             if (InvokeRequired)
             {
                 await Task.Run(() => Invoke(new Action(UpdateUI)));
@@ -401,9 +402,28 @@ namespace GokhanUI
             chart1.ChartAreas[0].AxisY.Minimum = -200;
             chart1.ChartAreas[0].AxisY.Maximum = 9000;
 
-            chart1.Series[0].Points.AddY(_serialReader.Altitude);
-            chart2.Series[0].Points.AddY(_serialReader.Velocity);
-            chart3.Series[0].Points.AddY(_serialReader.Temperature);
+            chart2.ChartAreas[0].AxisY.Minimum = 0;
+            chart2.ChartAreas[0].AxisY.Maximum = 600; 
+
+            chart3.ChartAreas[0].AxisY.Minimum = 0;
+            chart3.ChartAreas[0].AxisY.Maximum = 180;
+
+            
+            float irtifa = _serialReader.Altitude;
+            if (irtifa < -200) irtifa = -200;
+            if (irtifa > 9000) irtifa = 9000;
+            chart1.Series[0].Points.AddY(irtifa);
+
+            float velocity = _serialReader.Velocity;
+            if (velocity < 0) velocity = 0;
+            if (velocity > 600) velocity = 600;
+            chart2.Series[0].Points.AddY(velocity);
+
+            // Açı limiti: 0 ile 180
+            float angle = _serialReader.Angle;
+            if (angle < 0) angle = 0;
+            if (angle > 180) angle = 180;
+            chart3.Series[0].Points.AddY(angle);
 
             int maxPoints = 10; // Son 10 veriyi göster
             if (chart1.Series[0].Points.Count > maxPoints) chart1.Series[0].Points.RemoveAt(0);
@@ -596,7 +616,6 @@ namespace GokhanUI
             );
             _dataSender.Close();
 
-            MessageBox.Show("Dummy veri bir kez gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -665,25 +684,26 @@ namespace GokhanUI
         private void UpdateRocketStatus(byte status)
         {
             // Panelleri ve etiketleri diziye koy
-            var statusPanels = new[] { statusPanel1, statusPanel2, statusPanel3, statusPanel4, statusPanel5, statusPanel6, statusPanel7 };
-            var statusLabels = new[] { statusLabel1, statusLabel2, statusLabel3, statusLabel4, statusLabel5, statusLabel6, statusLabel6 };
+            var statusPanels = new[] { statusPanel1, statusPanel2, statusPanel3, statusPanel4, statusPanel5, statusPanel6, statusPanel7, statusPanel8 };
+            var statusLabels = new[] { statusLabel1, statusLabel2, statusLabel3, statusLabel4, statusLabel5, statusLabel6, statusLabel7,statusLabel8 };
 
             // Başlangıçta tüm panelleri kırmızı yap
             for (int i = 0; i < statusPanels.Length; i++)
             {
                 statusPanels[i].BackColor = Color.FromArgb(244, 67, 54); // Kırmızı
                 statusLabels[i].ForeColor = Color.White;
-                statusLabels[i].Font = new Font("Segoe UI", 6F, FontStyle.Regular);
+                statusLabels[i].Font = new Font("Segoe UI", 10F, FontStyle.Regular);
             }
 
             // Sabit label metinleri
             statusLabel1.Text = "Roket Hazır";
             statusLabel2.Text = "Burnout";
-            statusLabel3.Text = "Eşik İrtifası";
-            statusLabel4.Text = "Eşik Açısı";
-            statusLabel5.Text = "Düşüş";
+            statusLabel3.Text = "Eşik İrtifası Aşıldı";
+            statusLabel4.Text = "Eşik Açısı Geçildi";
+            statusLabel5.Text = "Roket Düşüşe Geçti";
             statusLabel6.Text = "Sürüklenme Paraşütü";
             statusLabel7.Text = "Ana Paraşüt İrtifası";
+            statusLabel8.Text = "Ana Paraşüt Açıldı";
 
 
             string currentStatusText = "";
@@ -699,7 +719,7 @@ namespace GokhanUI
 
                 case 0b0001: // Roket Hazır - Sadece 1. panel yeşil
                     statusPanels[0].BackColor = Color.FromArgb(76, 175, 80);
-                    statusLabels[0].Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+                    statusLabels[0].Font = new Font("Segoe UI", 12F, FontStyle.Bold);
                     currentStatusText = "✅ ROKET HAZIR";
                     currentStatusColor = Color.FromArgb(76, 175, 80);
                     break;
@@ -708,7 +728,7 @@ namespace GokhanUI
                     for (int i = 0; i <= 1; i++)
                     {
                         statusPanels[i].BackColor = Color.FromArgb(76, 175, 80);
-                        statusLabels[i].Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+                        statusLabels[i].Font = new Font("Segoe UI", 12F, FontStyle.Bold);
                     }
                     currentStatusText = "🔥 BURNOUT";
                     currentStatusColor = Color.FromArgb(33, 150, 243);
@@ -718,9 +738,9 @@ namespace GokhanUI
                     for (int i = 0; i <= 2; i++)
                     {
                         statusPanels[i].BackColor = Color.FromArgb(76, 175, 80);
-                        statusLabels[i].Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+                        statusLabels[i].Font = new Font("Segoe UI", 12F, FontStyle.Bold);
                     }
-                    currentStatusText = "📈 EŞİK İRTİFASI AŞILDI";
+                    currentStatusText = " EŞİK İRTİFASI AŞILDI";
                     currentStatusColor = Color.FromArgb(255, 193, 7);
                     break;
 
@@ -728,9 +748,9 @@ namespace GokhanUI
                     for (int i = 0; i <= 3; i++)
                     {
                         statusPanels[i].BackColor = Color.FromArgb(76, 175, 80);
-                        statusLabels[i].Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+                        statusLabels[i].Font = new Font("Segoe UI", 12F, FontStyle.Bold);
                     }
-                    currentStatusText = "📐 EŞİK AÇISI GEÇİLDİ";
+                    currentStatusText = " EŞİK AÇISI GEÇİLDİ";
                     currentStatusColor = Color.FromArgb(156, 39, 176);
                     break;
 
@@ -738,9 +758,9 @@ namespace GokhanUI
                     for (int i = 0; i <= 4; i++)
                     {
                         statusPanels[i].BackColor = Color.FromArgb(76, 175, 80);
-                        statusLabels[i].Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+                        statusLabels[i].Font = new Font("Segoe UI", 12F, FontStyle.Bold);
                     }
-                    currentStatusText = "⬇️ ROKET DÜŞÜŞE GEÇTİ";
+                    currentStatusText = "ROKET DÜŞÜŞE GEÇTİ";
                     currentStatusColor = Color.FromArgb(255, 87, 34);
                     break;
 
@@ -748,9 +768,9 @@ namespace GokhanUI
                     for (int i = 0; i <= 5; i++)
                     {
                         statusPanels[i].BackColor = Color.FromArgb(76, 175, 80);
-                        statusLabels[i].Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+                        statusLabels[i].Font = new Font("Segoe UI", 12F, FontStyle.Bold);
                     }
-                    currentStatusText = "🪂 SÜRÜKLENME PARAŞÜTÜ AÇILDI";
+                    currentStatusText = "SÜRÜKLENME PARAŞÜTÜ AÇILDI";
                     currentStatusColor = Color.FromArgb(76, 175, 80);
                     break;
 
@@ -758,9 +778,9 @@ namespace GokhanUI
                     for (int i = 0; i <= 6; i++)
                     {
                         statusPanels[i].BackColor = Color.FromArgb(76, 175, 80);
-                        statusLabels[i].Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+                        statusLabels[i].Font = new Font("Segoe UI", 12F, FontStyle.Bold);
                     }
-                    currentStatusText = "📏 ANA PARAŞÜT İRTİFASINA İNİLDİ";
+                    currentStatusText = "ANA PARAŞÜT İRTİFASINA İNİLDİ";
                     currentStatusColor = Color.FromArgb(33, 150, 243);
                     break;
 
@@ -768,14 +788,14 @@ namespace GokhanUI
                     for (int i = 0; i < statusPanels.Length; i++)
                     {
                         statusPanels[i].BackColor = Color.FromArgb(76, 175, 80);
-                        statusLabels[i].Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+                        statusLabels[i].Font = new Font("Segoe UI", 12F, FontStyle.Bold);
                     }
-                    currentStatusText = "🪂 ANA PARAŞÜT AÇILDI";
+                    currentStatusText = "ANA PARAŞÜT AÇILDI";
                     currentStatusColor = Color.FromArgb(76, 175, 80);
                     break;
 
                 default: // Diğer durumlar - Hepsi kırmızı kalsın
-                    currentStatusText = "❓ BİLİNMEYEN DURUM";
+                    currentStatusText = "BİLİNMEYEN DURUM";
                     currentStatusColor = Color.Gray;
                     break;
             }

@@ -31,9 +31,9 @@ namespace GokhanUI
             if (arduinoReader != null && arduinoReader.IsOpen)
             {
                 // Gyro verilerini kullan
-                x = arduinoReader.GyroX;
-                y = arduinoReader.GyroY;
-                z = arduinoReader.GyroZ;
+                x = -(arduinoReader.Roll);
+                y = arduinoReader.Pitch;
+                z = arduinoReader.Yaw;
 
                 UpdateLabels(x.ToString("F2"), y.ToString("F2"), z.ToString("F2"));
             }

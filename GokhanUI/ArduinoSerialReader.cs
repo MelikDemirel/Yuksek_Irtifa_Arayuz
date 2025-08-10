@@ -159,7 +159,7 @@ namespace GokhanUI
             byte durum = buffer[i++];
 
             byte rawTemp = buffer[i++];
-            Temperature = rawTemp / 5.0f;
+            Temperature = rawTemp / 2.0f;
 
             float HamVoltage = BitConverter.ToUInt16(buffer, i); i += 2;
             Current = BitConverter.ToUInt16(buffer, i); i += 2;

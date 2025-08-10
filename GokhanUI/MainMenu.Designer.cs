@@ -185,9 +185,10 @@
             this.label63 = new System.Windows.Forms.Label();
             this.label66 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.statusLabel8 = new System.Windows.Forms.Label();
+            this.statusPanel8 = new System.Windows.Forms.Panel();
             this.statusLabel7 = new System.Windows.Forms.Label();
             this.statusLabel6 = new System.Windows.Forms.Label();
-            this.currentStatusLabel = new System.Windows.Forms.Label();
             this.statusLabel5 = new System.Windows.Forms.Label();
             this.statusLabel4 = new System.Windows.Forms.Label();
             this.statusLabel3 = new System.Windows.Forms.Label();
@@ -200,12 +201,14 @@
             this.statusPanel3 = new System.Windows.Forms.Panel();
             this.statusPanel2 = new System.Windows.Forms.Panel();
             this.statusPanel1 = new System.Windows.Forms.Panel();
+            this.currentStatusLabel = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.gaugeAngle = new GokhanUI.GaugeControl();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.gaugeVoltage = new GokhanUI.GaugeControl();
             this.gaugeAltitude = new GokhanUI.GaugeControl();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
@@ -219,6 +222,7 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // chart1
@@ -1889,9 +1893,10 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.statusLabel8);
+            this.panel2.Controls.Add(this.statusPanel8);
             this.panel2.Controls.Add(this.statusLabel7);
             this.panel2.Controls.Add(this.statusLabel6);
-            this.panel2.Controls.Add(this.currentStatusLabel);
             this.panel2.Controls.Add(this.statusLabel5);
             this.panel2.Controls.Add(this.statusLabel4);
             this.panel2.Controls.Add(this.statusLabel3);
@@ -1904,11 +1909,29 @@
             this.panel2.Controls.Add(this.statusPanel3);
             this.panel2.Controls.Add(this.statusPanel2);
             this.panel2.Controls.Add(this.statusPanel1);
-            this.panel2.Location = new System.Drawing.Point(533, 338);
+            this.panel2.Location = new System.Drawing.Point(446, 387);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(480, 339);
+            this.panel2.Size = new System.Drawing.Size(480, 399);
             this.panel2.TabIndex = 111;
+            // 
+            // statusLabel8
+            // 
+            this.statusLabel8.AutoSize = true;
+            this.statusLabel8.Location = new System.Drawing.Point(82, 348);
+            this.statusLabel8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.statusLabel8.Name = "statusLabel8";
+            this.statusLabel8.Size = new System.Drawing.Size(41, 13);
+            this.statusLabel8.TabIndex = 111;
+            this.statusLabel8.Text = "label71";
+            // 
+            // statusPanel8
+            // 
+            this.statusPanel8.Location = new System.Drawing.Point(26, 339);
+            this.statusPanel8.Margin = new System.Windows.Forms.Padding(2);
+            this.statusPanel8.Name = "statusPanel8";
+            this.statusPanel8.Size = new System.Drawing.Size(36, 34);
+            this.statusPanel8.TabIndex = 110;
             // 
             // statusLabel7
             // 
@@ -1929,16 +1952,6 @@
             this.statusLabel6.Size = new System.Drawing.Size(41, 13);
             this.statusLabel6.TabIndex = 108;
             this.statusLabel6.Text = "label69";
-            // 
-            // currentStatusLabel
-            // 
-            this.currentStatusLabel.AutoSize = true;
-            this.currentStatusLabel.Location = new System.Drawing.Point(182, 166);
-            this.currentStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.currentStatusLabel.Name = "currentStatusLabel";
-            this.currentStatusLabel.Size = new System.Drawing.Size(41, 13);
-            this.currentStatusLabel.TabIndex = 108;
-            this.currentStatusLabel.Text = "label69";
             // 
             // statusLabel5
             // 
@@ -2046,14 +2059,26 @@
             this.statusPanel1.Size = new System.Drawing.Size(36, 34);
             this.statusPanel1.TabIndex = 100;
             // 
+            // currentStatusLabel
+            // 
+            this.currentStatusLabel.AutoSize = true;
+            this.currentStatusLabel.Location = new System.Drawing.Point(130, 45);
+            this.currentStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.currentStatusLabel.Name = "currentStatusLabel";
+            this.currentStatusLabel.Size = new System.Drawing.Size(41, 13);
+            this.currentStatusLabel.TabIndex = 108;
+            this.currentStatusLabel.Text = "label69";
+            // 
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel3.Controls.Add(this.gaugeAngle);
-            this.panel3.Location = new System.Drawing.Point(533, 684);
+            this.panel3.Controls.Add(this.gaugeVoltage);
+            this.panel3.Controls.Add(this.gaugeAltitude);
+            this.panel3.Location = new System.Drawing.Point(967, 375);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(480, 144);
+            this.panel3.Size = new System.Drawing.Size(175, 396);
             this.panel3.TabIndex = 112;
             // 
             // gaugeAngle
@@ -2063,7 +2088,7 @@
             this.gaugeAngle.Caption = "";
             this.gaugeAngle.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.gaugeAngle.ForeColor = System.Drawing.Color.White;
-            this.gaugeAngle.Location = new System.Drawing.Point(174, 28);
+            this.gaugeAngle.Location = new System.Drawing.Point(19, 287);
             this.gaugeAngle.Margin = new System.Windows.Forms.Padding(2);
             this.gaugeAngle.Max = 100F;
             this.gaugeAngle.Min = 0F;
@@ -2074,17 +2099,6 @@
             this.gaugeAngle.Unit = "";
             this.gaugeAngle.Value = 0F;
             // 
-            // panel4
-            // 
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel4.Controls.Add(this.button4);
-            this.panel4.Controls.Add(this.BtnMap);
-            this.panel4.Location = new System.Drawing.Point(672, 36);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(175, 253);
-            this.panel4.TabIndex = 113;
-            // 
             // gaugeVoltage
             // 
             this.gaugeVoltage.BackColor = System.Drawing.Color.Black;
@@ -2092,7 +2106,7 @@
             this.gaugeVoltage.Caption = "";
             this.gaugeVoltage.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.gaugeVoltage.ForeColor = System.Drawing.Color.White;
-            this.gaugeVoltage.Location = new System.Drawing.Point(867, 712);
+            this.gaugeVoltage.Location = new System.Drawing.Point(19, 24);
             this.gaugeVoltage.Margin = new System.Windows.Forms.Padding(2);
             this.gaugeVoltage.Max = 100F;
             this.gaugeVoltage.Min = 0F;
@@ -2110,7 +2124,7 @@
             this.gaugeAltitude.Caption = "";
             this.gaugeAltitude.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.gaugeAltitude.ForeColor = System.Drawing.Color.White;
-            this.gaugeAltitude.Location = new System.Drawing.Point(541, 713);
+            this.gaugeAltitude.Location = new System.Drawing.Point(19, 159);
             this.gaugeAltitude.Margin = new System.Windows.Forms.Padding(2);
             this.gaugeAltitude.Max = 100F;
             this.gaugeAltitude.Min = 0F;
@@ -2121,6 +2135,17 @@
             this.gaugeAltitude.Unit = "";
             this.gaugeAltitude.Value = 0F;
             // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.button4);
+            this.panel4.Controls.Add(this.BtnMap);
+            this.panel4.Location = new System.Drawing.Point(672, 36);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(175, 253);
+            this.panel4.TabIndex = 113;
+            // 
             // panel5
             // 
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -2130,11 +2155,21 @@
             this.panel5.Controls.Add(this.chart1);
             this.panel5.Controls.Add(this.chart3);
             this.panel5.Controls.Add(this.chart2);
-            this.panel5.Location = new System.Drawing.Point(1365, 11);
+            this.panel5.Location = new System.Drawing.Point(1365, 36);
             this.panel5.Margin = new System.Windows.Forms.Padding(2);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(480, 852);
             this.panel5.TabIndex = 114;
+            // 
+            // panel6
+            // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel6.Controls.Add(this.currentStatusLabel);
+            this.panel6.Location = new System.Drawing.Point(446, 794);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(480, 108);
+            this.panel6.TabIndex = 113;
             // 
             // MainMenu
             // 
@@ -2142,8 +2177,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(13)))), ((int)(((byte)(66)))));
             this.ClientSize = new System.Drawing.Size(1856, 913);
-            this.Controls.Add(this.gaugeVoltage);
-            this.Controls.Add(this.gaugeAltitude);
+            this.Controls.Add(this.panel6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.groupBox2);
@@ -2185,6 +2219,8 @@
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2356,5 +2392,8 @@
         private System.Windows.Forms.PictureBox logo;
         private System.Windows.Forms.TextBox txtBoxRoketZaman;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label statusLabel8;
+        private System.Windows.Forms.Panel statusPanel8;
+        private System.Windows.Forms.Panel panel6;
     }
 }
