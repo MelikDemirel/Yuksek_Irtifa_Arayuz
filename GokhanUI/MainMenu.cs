@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections.Generic;
+using Youtube3D_Simulasyon;
 
 namespace GokhanUI
 {
@@ -500,7 +501,7 @@ namespace GokhanUI
             }
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             if (_dataSender != null && _dataSender.IsSending)
             {
@@ -515,52 +516,42 @@ namespace GokhanUI
                 MessageBox.Show("Lütfen port, baudrate ve takım ID bilgilerini girin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            if (_serialReader == null && _gorevYukuReader == null)
-            {
-                MessageBox.Show("Roket veya görev yükü bağlantısı kurulmadı. Veri gönderimi yapılamaz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string selectedPort = comboBox3.SelectedItem.ToString();
-            int selectedBaudRate = int.Parse(comboBox2.SelectedItem.ToString());
-
             if (!byte.TryParse(textBox1.Text, out byte teamID))
             {
                 MessageBox.Show("Geçerli bir takım ID girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            string selectedPort = comboBox3.SelectedItem.ToString();
+            int selectedBaudRate = int.Parse(comboBox2.SelectedItem.ToString());
+
             _dataSender = new DataSender(selectedPort, selectedBaudRate);
-            _dataSender.Open();
+
+            // CANLI YENİLENEN GÖNDERİM
+            _dataSender.StartStreaming(teamID, () => new TelemetrySnapshot
+            {
+                Altitude = _serialReader != null ? _lastAltitude : 0,
+                GPSAltitude = _serialReader != null ? _lastGPSAltitude : 0,
+                Lat = _serialReader != null ? _lastLatitude : 0,
+                Lon = _serialReader != null ? _lastLongitude : 0,
+                MissionGpsAlt = _gorevYukuReader != null ? _lastGorevYukuGPSAltitude : 0,
+                MissionLat = _gorevYukuReader != null ? _lastGorevYukuLatitude : 0,
+                MissionLon = _gorevYukuReader != null ? _lastGorevYukuLongitude : 0,
+                StageGpsAlt = 0,
+                StageLat = 0,
+                StageLon = 0,
+                GyroX = _serialReader != null ? _lastPitch : 0,
+                GyroY = _serialReader != null ? _lastRoll : 0,
+                GyroZ = _serialReader != null ? _lastYaw : 0,
+                AccX = _serialReader != null ? _lastAccelX : 0,
+                AccY = _serialReader != null ? _lastAccelY : 0,
+                AccZ = _serialReader != null ? _lastAccelZ : 0,
+                Angle = _serialReader != null ? _lastAngle : 0,
+                Status = _serialReader != null ? _lastStatus : (byte)0
+            });
 
             button1.Text = "Durdur";
             button1.BackColor = Color.Red;
-
-            while (_dataSender.IsSending)
-            {
-                // En son verileri kullan
-                _dataSender.StartSending(
-                    teamID,
-                    _serialReader != null ? _lastAltitude : 0,
-                    _serialReader != null ? _lastGPSAltitude : 0,
-                    _serialReader != null ? _lastLatitude : 0,
-                    _serialReader != null ? _lastLongitude : 0,
-                    _gorevYukuReader != null ? _lastGorevYukuGPSAltitude : 0,
-                    _gorevYukuReader != null ? _lastGorevYukuLatitude : 0,
-                    _gorevYukuReader != null ? _lastGorevYukuLongitude : 0,
-                    0, 0, 0,
-                    _serialReader != null ? _lastPitch : 0,
-                    _serialReader != null ? _lastRoll : 0,
-                    _serialReader != null ? _lastYaw : 0,
-                    _serialReader != null ? _lastAccelX : 0,
-                    _serialReader != null ? _lastAccelY : 0,
-                    _serialReader != null ? _lastAccelZ : 0,
-                    _serialReader != null ? _lastAngle : 0,
-                    _serialReader != null ? _lastStatus : (byte)1
-                );
-                await Task.Delay(1000); // 1 saniye aralıkla gönderim
-            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -582,7 +573,6 @@ namespace GokhanUI
                 MessageBox.Show("Lütfen port, baudrate ve takım ID bilgilerini girin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (!byte.TryParse(textBox1.Text, out byte teamID))
             {
                 MessageBox.Show("Geçerli bir takım ID girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -593,29 +583,30 @@ namespace GokhanUI
             int selectedBaudRate = int.Parse(comboBox2.SelectedItem.ToString());
 
             _dataSender = new DataSender(selectedPort, selectedBaudRate);
-            _dataSender.Open();
 
-            _dataSender.StartSending(
+            // TEK SEFERLİK DUMMY
+            _dataSender.SendOnce(
                 teamID,
-                100.50f,
-                105.25f,
-                39.9256f,
-                32.8351f,
-                102.75f,
-                39.9257f,
-                32.8352f,
-                0, 0, 0,
-                10.5f,
-                5.2f,
-                -3.1f,
-                0.5f,
-                0.3f,
-                9.8f,
-                15.0f,
-                (byte)1
+                100.50f,  // altitude
+                105.25f,  // gpsAltitude
+                39.9256f, // lat
+                32.8351f, // lon
+                102.75f,  // missionGpsAlt
+                39.9257f, // missionLat
+                32.8352f, // missionLon
+                0, 0, 0,  // stageGpsAlt, stageLat, stageLon
+                10.5f,    // gyroX
+                5.2f,     // gyroY
+                -3.1f,    // gyroZ
+                0.5f,     // accX
+                0.3f,     // accY
+                9.8f,     // accZ
+                15.0f,    // angle
+                (byte)1,  // status
+                closeAfter: true
             );
-            _dataSender.Close();
 
+            MessageBox.Show("Dummy veri bir kez gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button6_Click(object sender, EventArgs e)
