@@ -120,7 +120,6 @@
             this.txtBoxGorevYukuYaw = new System.Windows.Forms.TextBox();
             this.txtBoxGorevYukuRoll = new System.Windows.Forms.TextBox();
             this.txtBoxGorevYukuPitch = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtBoxRoketCurrent = new System.Windows.Forms.TextBox();
@@ -157,7 +156,6 @@
             this.label51 = new System.Windows.Forms.Label();
             this.comboBoxColors = new System.Windows.Forms.ComboBox();
             this.btnApplyColor = new System.Windows.Forms.Button();
-            this.label27 = new System.Windows.Forms.Label();
             this.label65 = new System.Windows.Forms.Label();
             this.txtBoxRoketGyroY = new System.Windows.Forms.TextBox();
             this.label62 = new System.Windows.Forms.Label();
@@ -207,8 +205,12 @@
             this.gaugeVoltage = new GokhanUI.GaugeControl();
             this.gaugeAltitude = new GokhanUI.GaugeControl();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.label27 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
@@ -223,6 +225,7 @@
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // chart1
@@ -306,40 +309,43 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Black;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(207, 275);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 24);
+            this.label1.Size = new System.Drawing.Size(70, 24);
             this.label1.TabIndex = 12;
-            this.label1.Text = "AÇI";
+            this.label1.Text = "AÇI (°)";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Black;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(189, 6);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 24);
+            this.label2.Size = new System.Drawing.Size(111, 24);
             this.label2.TabIndex = 13;
-            this.label2.Text = "İRTİFA";
+            this.label2.Text = "İRTİFA (m)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Black;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(207, 555);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 24);
+            this.label3.Size = new System.Drawing.Size(96, 24);
             this.label3.TabIndex = 14;
-            this.label3.Text = "HIZ";
+            this.label3.Text = "HIZ (m/s)";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // BtnMap
@@ -725,7 +731,7 @@
             this.groupBox5.Controls.Add(this.label42);
             this.groupBox5.Controls.Add(this.txtBoxGorevYukuVoltage);
             this.groupBox5.Controls.Add(this.txtBoxGorevYukuLongitude);
-            this.groupBox5.Location = new System.Drawing.Point(1193, 31);
+            this.groupBox5.Location = new System.Drawing.Point(1198, 49);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
@@ -758,6 +764,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
+            this.label23.BackColor = System.Drawing.Color.Black;
             this.label23.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label23.Location = new System.Drawing.Point(4, 287);
             this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -780,6 +787,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.Black;
             this.label22.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label22.ForeColor = System.Drawing.Color.White;
             this.label22.Location = new System.Drawing.Point(4, 46);
@@ -792,8 +800,9 @@
             // label31
             // 
             this.label31.AutoSize = true;
+            this.label31.BackColor = System.Drawing.Color.Black;
             this.label31.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label31.Location = new System.Drawing.Point(5, 721);
+            this.label31.Location = new System.Drawing.Point(5, 723);
             this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(82, 19);
@@ -803,6 +812,7 @@
             // label53
             // 
             this.label53.AutoSize = true;
+            this.label53.BackColor = System.Drawing.Color.Black;
             this.label53.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label53.Location = new System.Drawing.Point(3, 570);
             this.label53.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -816,7 +826,7 @@
             this.txtBoxGorevYukuIvmeZ.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxGorevYukuIvmeZ.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxGorevYukuIvmeZ.Location = new System.Drawing.Point(3, 591);
+            this.txtBoxGorevYukuIvmeZ.Location = new System.Drawing.Point(3, 592);
             this.txtBoxGorevYukuIvmeZ.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxGorevYukuIvmeZ.Name = "txtBoxGorevYukuIvmeZ";
             this.txtBoxGorevYukuIvmeZ.Size = new System.Drawing.Size(140, 26);
@@ -827,7 +837,7 @@
             this.txtBoxGorevYukuChecksum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxGorevYukuChecksum.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxGorevYukuChecksum.Location = new System.Drawing.Point(4, 741);
+            this.txtBoxGorevYukuChecksum.Location = new System.Drawing.Point(4, 746);
             this.txtBoxGorevYukuChecksum.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxGorevYukuChecksum.Name = "txtBoxGorevYukuChecksum";
             this.txtBoxGorevYukuChecksum.Size = new System.Drawing.Size(140, 26);
@@ -836,6 +846,7 @@
             // label54
             // 
             this.label54.AutoSize = true;
+            this.label54.BackColor = System.Drawing.Color.Black;
             this.label54.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label54.Location = new System.Drawing.Point(4, 336);
             this.label54.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -869,6 +880,7 @@
             // label56
             // 
             this.label56.AutoSize = true;
+            this.label56.BackColor = System.Drawing.Color.Black;
             this.label56.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label56.Location = new System.Drawing.Point(4, 239);
             this.label56.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -882,7 +894,7 @@
             this.txtBoxGorevYukuTemperature.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxGorevYukuTemperature.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxGorevYukuTemperature.Location = new System.Drawing.Point(4, 691);
+            this.txtBoxGorevYukuTemperature.Location = new System.Drawing.Point(4, 693);
             this.txtBoxGorevYukuTemperature.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxGorevYukuTemperature.Name = "txtBoxGorevYukuTemperature";
             this.txtBoxGorevYukuTemperature.Size = new System.Drawing.Size(140, 26);
@@ -891,6 +903,7 @@
             // label55
             // 
             this.label55.AutoSize = true;
+            this.label55.BackColor = System.Drawing.Color.Black;
             this.label55.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label55.ForeColor = System.Drawing.Color.White;
             this.label55.Location = new System.Drawing.Point(4, 192);
@@ -947,8 +960,9 @@
             // label60
             // 
             this.label60.AutoSize = true;
+            this.label60.BackColor = System.Drawing.Color.Black;
             this.label60.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label60.Location = new System.Drawing.Point(3, 668);
+            this.label60.Location = new System.Drawing.Point(3, 670);
             this.label60.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(65, 19);
@@ -958,6 +972,7 @@
             // label38
             // 
             this.label38.AutoSize = true;
+            this.label38.BackColor = System.Drawing.Color.Black;
             this.label38.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label38.ForeColor = System.Drawing.Color.White;
             this.label38.Location = new System.Drawing.Point(4, 98);
@@ -970,6 +985,7 @@
             // label61
             // 
             this.label61.AutoSize = true;
+            this.label61.BackColor = System.Drawing.Color.Black;
             this.label61.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label61.Location = new System.Drawing.Point(4, 622);
             this.label61.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -981,6 +997,7 @@
             // label49
             // 
             this.label49.AutoSize = true;
+            this.label49.BackColor = System.Drawing.Color.Black;
             this.label49.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label49.Location = new System.Drawing.Point(3, 522);
             this.label49.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -992,6 +1009,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.Color.Black;
             this.label40.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label40.Location = new System.Drawing.Point(4, 475);
             this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -1014,6 +1032,7 @@
             // label39
             // 
             this.label39.AutoSize = true;
+            this.label39.BackColor = System.Drawing.Color.Black;
             this.label39.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label39.ForeColor = System.Drawing.Color.White;
             this.label39.Location = new System.Drawing.Point(4, -2);
@@ -1037,6 +1056,7 @@
             // label41
             // 
             this.label41.AutoSize = true;
+            this.label41.BackColor = System.Drawing.Color.Black;
             this.label41.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label41.Location = new System.Drawing.Point(4, 430);
             this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -1048,6 +1068,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
+            this.label37.BackColor = System.Drawing.Color.Black;
             this.label37.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label37.ForeColor = System.Drawing.Color.White;
             this.label37.Location = new System.Drawing.Point(4, 144);
@@ -1060,6 +1081,7 @@
             // label42
             // 
             this.label42.AutoSize = true;
+            this.label42.BackColor = System.Drawing.Color.Black;
             this.label42.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label42.Location = new System.Drawing.Point(4, 383);
             this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -1095,7 +1117,7 @@
             this.txtBoxGorevYukuYaw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxGorevYukuYaw.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxGorevYukuYaw.Location = new System.Drawing.Point(3, 114);
+            this.txtBoxGorevYukuYaw.Location = new System.Drawing.Point(4, 156);
             this.txtBoxGorevYukuYaw.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxGorevYukuYaw.Name = "txtBoxGorevYukuYaw";
             this.txtBoxGorevYukuYaw.Size = new System.Drawing.Size(140, 26);
@@ -1106,7 +1128,7 @@
             this.txtBoxGorevYukuRoll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxGorevYukuRoll.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxGorevYukuRoll.Location = new System.Drawing.Point(3, 210);
+            this.txtBoxGorevYukuRoll.Location = new System.Drawing.Point(4, 252);
             this.txtBoxGorevYukuRoll.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxGorevYukuRoll.Name = "txtBoxGorevYukuRoll";
             this.txtBoxGorevYukuRoll.Size = new System.Drawing.Size(140, 26);
@@ -1117,75 +1139,64 @@
             this.txtBoxGorevYukuPitch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxGorevYukuPitch.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxGorevYukuPitch.Location = new System.Drawing.Point(3, 165);
+            this.txtBoxGorevYukuPitch.Location = new System.Drawing.Point(4, 207);
             this.txtBoxGorevYukuPitch.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxGorevYukuPitch.Name = "txtBoxGorevYukuPitch";
             this.txtBoxGorevYukuPitch.Size = new System.Drawing.Size(140, 26);
             this.txtBoxGorevYukuPitch.TabIndex = 46;
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(1222, 9);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(94, 19);
-            this.label15.TabIndex = 87;
-            this.label15.Text = "GÖREV YÜKÜ";
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label14.BackColor = System.Drawing.Color.Black;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 14F);
             this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(274, 6);
+            this.label14.Location = new System.Drawing.Point(341, 8);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(50, 19);
+            this.label14.Size = new System.Drawing.Size(68, 25);
             this.label14.TabIndex = 92;
             this.label14.Text = "ROKET";
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.txtBoxRoketCurrent);
+            this.groupBox4.Controls.Add(this.label33);
             this.groupBox4.Controls.Add(this.label16);
             this.groupBox4.Controls.Add(this.label17);
+            this.groupBox4.Controls.Add(this.txtBoxRoketVelocity);
             this.groupBox4.Controls.Add(this.txtBoxRoketVoltage);
-            this.groupBox4.Controls.Add(this.txtBoxRoketAngle);
-            this.groupBox4.Controls.Add(this.label18);
-            this.groupBox4.Controls.Add(this.txtBoxRoketYaw);
-            this.groupBox4.Controls.Add(this.label19);
+            this.groupBox4.Controls.Add(this.label44);
             this.groupBox4.Controls.Add(this.label20);
+            this.groupBox4.Controls.Add(this.txtBoxRoketGyroX);
+            this.groupBox4.Controls.Add(this.txtBoxRoketMaxIrtifa);
+            this.groupBox4.Controls.Add(this.GyroX);
             this.groupBox4.Controls.Add(this.txtBoxRoketIrtifa);
             this.groupBox4.Controls.Add(this.txtRoketTemperature);
             this.groupBox4.Controls.Add(this.label58);
-            this.groupBox4.Controls.Add(this.txtBoxRoketChecksum);
             this.groupBox4.Controls.Add(this.txtRoketHumidity);
             this.groupBox4.Controls.Add(this.label57);
+            this.groupBox4.Controls.Add(this.label65);
             this.groupBox4.Controls.Add(this.label32);
             this.groupBox4.Controls.Add(this.txtBoxRoketGpsIrtifa);
+            this.groupBox4.Controls.Add(this.txtBoxRoketGyroY);
             this.groupBox4.Controls.Add(this.label46);
             this.groupBox4.Controls.Add(this.label35);
+            this.groupBox4.Controls.Add(this.label62);
             this.groupBox4.Controls.Add(this.txtBoxRoketIvmeY);
+            this.groupBox4.Controls.Add(this.txtBoxRoketGyroZ);
             this.groupBox4.Controls.Add(this.txtBoxRoketGpsBoylam);
             this.groupBox4.Controls.Add(this.txtBoxRoketGpsEnlem);
             this.groupBox4.Controls.Add(this.label36);
-            this.groupBox4.Controls.Add(this.txtBoxRoketRoll);
-            this.groupBox4.Controls.Add(this.label52);
             this.groupBox4.Controls.Add(this.txtBoxRoketIvmeZ);
-            this.groupBox4.Controls.Add(this.label50);
             this.groupBox4.Controls.Add(this.label48);
             this.groupBox4.Controls.Add(this.label47);
             this.groupBox4.Controls.Add(this.txtBoxRoketIvmeX);
-            this.groupBox4.Controls.Add(this.txtBoxRoketPitch);
-            this.groupBox4.Controls.Add(this.label51);
-            this.groupBox4.Location = new System.Drawing.Point(220, 26);
+            this.groupBox4.Location = new System.Drawing.Point(221, 35);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox4.Size = new System.Drawing.Size(143, 789);
+            this.groupBox4.Size = new System.Drawing.Size(145, 781);
             this.groupBox4.TabIndex = 91;
             this.groupBox4.TabStop = false;
             // 
@@ -1194,17 +1205,18 @@
             this.txtBoxRoketCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketCurrent.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketCurrent.Location = new System.Drawing.Point(2, 448);
+            this.txtBoxRoketCurrent.Location = new System.Drawing.Point(4, 503);
             this.txtBoxRoketCurrent.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketCurrent.Name = "txtBoxRoketCurrent";
-            this.txtBoxRoketCurrent.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketCurrent.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketCurrent.TabIndex = 87;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.Black;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label16.Location = new System.Drawing.Point(2, 380);
+            this.label16.Location = new System.Drawing.Point(3, 240);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(56, 19);
@@ -1214,8 +1226,9 @@
             // label17
             // 
             this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.Black;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label17.Location = new System.Drawing.Point(2, 427);
+            this.label17.Location = new System.Drawing.Point(4, 482);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(43, 19);
@@ -1227,10 +1240,10 @@
             this.txtBoxRoketVoltage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketVoltage.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketVoltage.Location = new System.Drawing.Point(2, 401);
+            this.txtBoxRoketVoltage.Location = new System.Drawing.Point(3, 259);
             this.txtBoxRoketVoltage.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketVoltage.Name = "txtBoxRoketVoltage";
-            this.txtBoxRoketVoltage.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketVoltage.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketVoltage.TabIndex = 86;
             // 
             // txtBoxRoketAngle
@@ -1238,7 +1251,7 @@
             this.txtBoxRoketAngle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketAngle.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketAngle.Location = new System.Drawing.Point(2, 356);
+            this.txtBoxRoketAngle.Location = new System.Drawing.Point(4, 67);
             this.txtBoxRoketAngle.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketAngle.Name = "txtBoxRoketAngle";
             this.txtBoxRoketAngle.Size = new System.Drawing.Size(138, 26);
@@ -1247,20 +1260,21 @@
             // label18
             // 
             this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.Color.Black;
             this.label18.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label18.Location = new System.Drawing.Point(1, 335);
+            this.label18.Location = new System.Drawing.Point(4, 45);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(52, 19);
+            this.label18.Size = new System.Drawing.Size(31, 19);
             this.label18.TabIndex = 82;
-            this.label18.Text = "ANGLE";
+            this.label18.Text = "AÇI";
             // 
             // txtBoxRoketYaw
             // 
             this.txtBoxRoketYaw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketYaw.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketYaw.Location = new System.Drawing.Point(2, 308);
+            this.txtBoxRoketYaw.Location = new System.Drawing.Point(3, 168);
             this.txtBoxRoketYaw.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketYaw.Name = "txtBoxRoketYaw";
             this.txtBoxRoketYaw.Size = new System.Drawing.Size(138, 26);
@@ -1269,8 +1283,9 @@
             // label19
             // 
             this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.Black;
             this.label19.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label19.Location = new System.Drawing.Point(2, 286);
+            this.label19.Location = new System.Drawing.Point(5, 146);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(37, 19);
@@ -1280,8 +1295,9 @@
             // label20
             // 
             this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.Black;
             this.label20.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label20.Location = new System.Drawing.Point(6, 0);
+            this.label20.Location = new System.Drawing.Point(3, 47);
             this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(46, 19);
@@ -1293,10 +1309,10 @@
             this.txtBoxRoketIrtifa.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketIrtifa.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketIrtifa.Location = new System.Drawing.Point(3, 20);
+            this.txtBoxRoketIrtifa.Location = new System.Drawing.Point(3, 67);
             this.txtBoxRoketIrtifa.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketIrtifa.Name = "txtBoxRoketIrtifa";
-            this.txtBoxRoketIrtifa.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketIrtifa.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketIrtifa.TabIndex = 79;
             // 
             // txtRoketTemperature
@@ -1304,17 +1320,18 @@
             this.txtRoketTemperature.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRoketTemperature.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtRoketTemperature.Location = new System.Drawing.Point(2, 684);
+            this.txtRoketTemperature.Location = new System.Drawing.Point(4, 745);
             this.txtRoketTemperature.Margin = new System.Windows.Forms.Padding(2);
             this.txtRoketTemperature.Name = "txtRoketTemperature";
-            this.txtRoketTemperature.Size = new System.Drawing.Size(138, 26);
+            this.txtRoketTemperature.Size = new System.Drawing.Size(140, 26);
             this.txtRoketTemperature.TabIndex = 54;
             // 
             // label58
             // 
             this.label58.AutoSize = true;
+            this.label58.BackColor = System.Drawing.Color.Black;
             this.label58.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label58.Location = new System.Drawing.Point(2, 663);
+            this.label58.Location = new System.Drawing.Point(3, 724);
             this.label58.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(65, 19);
@@ -1326,7 +1343,7 @@
             this.txtBoxRoketChecksum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketChecksum.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketChecksum.Location = new System.Drawing.Point(2, 736);
+            this.txtBoxRoketChecksum.Location = new System.Drawing.Point(3, 310);
             this.txtBoxRoketChecksum.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketChecksum.Name = "txtBoxRoketChecksum";
             this.txtBoxRoketChecksum.Size = new System.Drawing.Size(138, 26);
@@ -1337,17 +1354,18 @@
             this.txtRoketHumidity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRoketHumidity.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtRoketHumidity.Location = new System.Drawing.Point(2, 636);
+            this.txtRoketHumidity.Location = new System.Drawing.Point(4, 695);
             this.txtRoketHumidity.Margin = new System.Windows.Forms.Padding(2);
             this.txtRoketHumidity.Name = "txtRoketHumidity";
-            this.txtRoketHumidity.Size = new System.Drawing.Size(138, 26);
+            this.txtRoketHumidity.Size = new System.Drawing.Size(140, 26);
             this.txtRoketHumidity.TabIndex = 52;
             // 
             // label57
             // 
             this.label57.AutoSize = true;
+            this.label57.BackColor = System.Drawing.Color.Black;
             this.label57.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label57.Location = new System.Drawing.Point(2, 615);
+            this.label57.Location = new System.Drawing.Point(4, 674);
             this.label57.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(39, 19);
@@ -1357,8 +1375,9 @@
             // label32
             // 
             this.label32.AutoSize = true;
+            this.label32.BackColor = System.Drawing.Color.Black;
             this.label32.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label32.Location = new System.Drawing.Point(3, 47);
+            this.label32.Location = new System.Drawing.Point(2, 95);
             this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(75, 19);
@@ -1370,17 +1389,18 @@
             this.txtBoxRoketGpsIrtifa.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketGpsIrtifa.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketGpsIrtifa.Location = new System.Drawing.Point(3, 68);
+            this.txtBoxRoketGpsIrtifa.Location = new System.Drawing.Point(3, 116);
             this.txtBoxRoketGpsIrtifa.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketGpsIrtifa.Name = "txtBoxRoketGpsIrtifa";
-            this.txtBoxRoketGpsIrtifa.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketGpsIrtifa.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketGpsIrtifa.TabIndex = 30;
             // 
             // label46
             // 
             this.label46.AutoSize = true;
+            this.label46.BackColor = System.Drawing.Color.Black;
             this.label46.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label46.Location = new System.Drawing.Point(2, 569);
+            this.label46.Location = new System.Drawing.Point(4, 625);
             this.label46.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(54, 19);
@@ -1390,8 +1410,9 @@
             // label35
             // 
             this.label35.AutoSize = true;
+            this.label35.BackColor = System.Drawing.Color.Black;
             this.label35.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label35.Location = new System.Drawing.Point(3, 95);
+            this.label35.Location = new System.Drawing.Point(2, 144);
             this.label35.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(82, 19);
@@ -1403,10 +1424,10 @@
             this.txtBoxRoketIvmeY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketIvmeY.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketIvmeY.Location = new System.Drawing.Point(2, 542);
+            this.txtBoxRoketIvmeY.Location = new System.Drawing.Point(4, 597);
             this.txtBoxRoketIvmeY.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketIvmeY.Name = "txtBoxRoketIvmeY";
-            this.txtBoxRoketIvmeY.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketIvmeY.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketIvmeY.TabIndex = 64;
             // 
             // txtBoxRoketGpsBoylam
@@ -1414,10 +1435,10 @@
             this.txtBoxRoketGpsBoylam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketGpsBoylam.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketGpsBoylam.Location = new System.Drawing.Point(3, 166);
+            this.txtBoxRoketGpsBoylam.Location = new System.Drawing.Point(3, 214);
             this.txtBoxRoketGpsBoylam.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketGpsBoylam.Name = "txtBoxRoketGpsBoylam";
-            this.txtBoxRoketGpsBoylam.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketGpsBoylam.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketGpsBoylam.TabIndex = 34;
             // 
             // txtBoxRoketGpsEnlem
@@ -1425,17 +1446,18 @@
             this.txtBoxRoketGpsEnlem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketGpsEnlem.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketGpsEnlem.Location = new System.Drawing.Point(3, 116);
+            this.txtBoxRoketGpsEnlem.Location = new System.Drawing.Point(3, 165);
             this.txtBoxRoketGpsEnlem.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketGpsEnlem.Name = "txtBoxRoketGpsEnlem";
-            this.txtBoxRoketGpsEnlem.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketGpsEnlem.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketGpsEnlem.TabIndex = 32;
             // 
             // label36
             // 
             this.label36.AutoSize = true;
+            this.label36.BackColor = System.Drawing.Color.Black;
             this.label36.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label36.Location = new System.Drawing.Point(3, 143);
+            this.label36.Location = new System.Drawing.Point(2, 192);
             this.label36.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(94, 19);
@@ -1447,7 +1469,7 @@
             this.txtBoxRoketRoll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketRoll.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketRoll.Location = new System.Drawing.Point(2, 260);
+            this.txtBoxRoketRoll.Location = new System.Drawing.Point(3, 264);
             this.txtBoxRoketRoll.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketRoll.Name = "txtBoxRoketRoll";
             this.txtBoxRoketRoll.Size = new System.Drawing.Size(138, 26);
@@ -1456,8 +1478,9 @@
             // label52
             // 
             this.label52.AutoSize = true;
+            this.label52.BackColor = System.Drawing.Color.Black;
             this.label52.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label52.Location = new System.Drawing.Point(2, 715);
+            this.label52.Location = new System.Drawing.Point(2, 289);
             this.label52.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(82, 19);
@@ -1469,17 +1492,18 @@
             this.txtBoxRoketIvmeZ.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketIvmeZ.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketIvmeZ.Location = new System.Drawing.Point(2, 589);
+            this.txtBoxRoketIvmeZ.Location = new System.Drawing.Point(4, 646);
             this.txtBoxRoketIvmeZ.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketIvmeZ.Name = "txtBoxRoketIvmeZ";
-            this.txtBoxRoketIvmeZ.Size = new System.Drawing.Size(135, 26);
+            this.txtBoxRoketIvmeZ.Size = new System.Drawing.Size(137, 26);
             this.txtBoxRoketIvmeZ.TabIndex = 66;
             // 
             // label50
             // 
             this.label50.AutoSize = true;
+            this.label50.BackColor = System.Drawing.Color.Black;
             this.label50.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label50.Location = new System.Drawing.Point(2, 240);
+            this.label50.Location = new System.Drawing.Point(3, 244);
             this.label50.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(42, 19);
@@ -1489,8 +1513,9 @@
             // label48
             // 
             this.label48.AutoSize = true;
+            this.label48.BackColor = System.Drawing.Color.Black;
             this.label48.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label48.Location = new System.Drawing.Point(2, 474);
+            this.label48.Location = new System.Drawing.Point(4, 529);
             this.label48.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(54, 19);
@@ -1500,8 +1525,9 @@
             // label47
             // 
             this.label47.AutoSize = true;
+            this.label47.BackColor = System.Drawing.Color.Black;
             this.label47.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label47.Location = new System.Drawing.Point(2, 522);
+            this.label47.Location = new System.Drawing.Point(4, 577);
             this.label47.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(54, 19);
@@ -1513,10 +1539,10 @@
             this.txtBoxRoketIvmeX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketIvmeX.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketIvmeX.Location = new System.Drawing.Point(2, 495);
+            this.txtBoxRoketIvmeX.Location = new System.Drawing.Point(4, 550);
             this.txtBoxRoketIvmeX.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketIvmeX.Name = "txtBoxRoketIvmeX";
-            this.txtBoxRoketIvmeX.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketIvmeX.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketIvmeX.TabIndex = 62;
             // 
             // txtBoxRoketPitch
@@ -1524,7 +1550,7 @@
             this.txtBoxRoketPitch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketPitch.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketPitch.Location = new System.Drawing.Point(2, 214);
+            this.txtBoxRoketPitch.Location = new System.Drawing.Point(3, 217);
             this.txtBoxRoketPitch.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketPitch.Name = "txtBoxRoketPitch";
             this.txtBoxRoketPitch.Size = new System.Drawing.Size(138, 26);
@@ -1533,8 +1559,9 @@
             // label51
             // 
             this.label51.AutoSize = true;
+            this.label51.BackColor = System.Drawing.Color.Black;
             this.label51.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label51.Location = new System.Drawing.Point(2, 193);
+            this.label51.Location = new System.Drawing.Point(2, 195);
             this.label51.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(46, 19);
@@ -1544,7 +1571,7 @@
             // comboBoxColors
             // 
             this.comboBoxColors.FormattingEnabled = true;
-            this.comboBoxColors.Location = new System.Drawing.Point(710, 214);
+            this.comboBoxColors.Location = new System.Drawing.Point(708, 214);
             this.comboBoxColors.Name = "comboBoxColors";
             this.comboBoxColors.Size = new System.Drawing.Size(102, 21);
             this.comboBoxColors.TabIndex = 93;
@@ -1553,7 +1580,7 @@
             // 
             this.btnApplyColor.BackColor = System.Drawing.Color.Lime;
             this.btnApplyColor.ForeColor = System.Drawing.Color.Black;
-            this.btnApplyColor.Location = new System.Drawing.Point(710, 244);
+            this.btnApplyColor.Location = new System.Drawing.Point(708, 244);
             this.btnApplyColor.Margin = new System.Windows.Forms.Padding(2);
             this.btnApplyColor.Name = "btnApplyColor";
             this.btnApplyColor.Size = new System.Drawing.Size(102, 31);
@@ -1562,23 +1589,12 @@
             this.btnApplyColor.UseVisualStyleBackColor = false;
             this.btnApplyColor.Click += new System.EventHandler(this.btnApplyColor_Click);
             // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label27.ForeColor = System.Drawing.Color.White;
-            this.label27.Location = new System.Drawing.Point(418, 6);
-            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(50, 19);
-            this.label27.TabIndex = 95;
-            this.label27.Text = "ROKET";
-            // 
             // label65
             // 
             this.label65.AutoSize = true;
+            this.label65.BackColor = System.Drawing.Color.Black;
             this.label65.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label65.Location = new System.Drawing.Point(2, 193);
+            this.label65.Location = new System.Drawing.Point(4, 377);
             this.label65.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(47, 19);
@@ -1590,17 +1606,18 @@
             this.txtBoxRoketGyroY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketGyroY.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketGyroY.Location = new System.Drawing.Point(2, 214);
+            this.txtBoxRoketGyroY.Location = new System.Drawing.Point(4, 399);
             this.txtBoxRoketGyroY.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketGyroY.Name = "txtBoxRoketGyroY";
-            this.txtBoxRoketGyroY.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketGyroY.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketGyroY.TabIndex = 68;
             // 
             // label62
             // 
             this.label62.AutoSize = true;
+            this.label62.BackColor = System.Drawing.Color.Black;
             this.label62.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label62.Location = new System.Drawing.Point(2, 240);
+            this.label62.Location = new System.Drawing.Point(4, 427);
             this.label62.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(47, 19);
@@ -1612,17 +1629,18 @@
             this.txtBoxRoketGyroZ.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketGyroZ.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketGyroZ.Location = new System.Drawing.Point(2, 260);
+            this.txtBoxRoketGyroZ.Location = new System.Drawing.Point(4, 449);
             this.txtBoxRoketGyroZ.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketGyroZ.Name = "txtBoxRoketGyroZ";
-            this.txtBoxRoketGyroZ.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketGyroZ.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketGyroZ.TabIndex = 70;
             // 
             // GyroX
             // 
             this.GyroX.AutoSize = true;
+            this.GyroX.BackColor = System.Drawing.Color.Black;
             this.GyroX.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.GyroX.Location = new System.Drawing.Point(3, 143);
+            this.GyroX.Location = new System.Drawing.Point(4, 334);
             this.GyroX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.GyroX.Name = "GyroX";
             this.GyroX.Size = new System.Drawing.Size(47, 19);
@@ -1634,7 +1652,7 @@
             this.txtBoxRoketUyduSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketUyduSayisi.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketUyduSayisi.Location = new System.Drawing.Point(3, 116);
+            this.txtBoxRoketUyduSayisi.Location = new System.Drawing.Point(3, 118);
             this.txtBoxRoketUyduSayisi.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketUyduSayisi.Name = "txtBoxRoketUyduSayisi";
             this.txtBoxRoketUyduSayisi.Size = new System.Drawing.Size(138, 26);
@@ -1645,17 +1663,18 @@
             this.txtBoxRoketGyroX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketGyroX.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketGyroX.Location = new System.Drawing.Point(3, 166);
+            this.txtBoxRoketGyroX.Location = new System.Drawing.Point(4, 352);
             this.txtBoxRoketGyroX.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketGyroX.Name = "txtBoxRoketGyroX";
-            this.txtBoxRoketGyroX.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketGyroX.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketGyroX.TabIndex = 34;
             // 
             // uydu
             // 
             this.uydu.AutoSize = true;
+            this.uydu.BackColor = System.Drawing.Color.Black;
             this.uydu.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.uydu.Location = new System.Drawing.Point(3, 95);
+            this.uydu.Location = new System.Drawing.Point(5, 96);
             this.uydu.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.uydu.Name = "uydu";
             this.uydu.Size = new System.Drawing.Size(79, 19);
@@ -1667,17 +1686,18 @@
             this.txtBoxRoketMaxIrtifa.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketMaxIrtifa.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketMaxIrtifa.Location = new System.Drawing.Point(3, 68);
+            this.txtBoxRoketMaxIrtifa.Location = new System.Drawing.Point(3, 20);
             this.txtBoxRoketMaxIrtifa.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketMaxIrtifa.Name = "txtBoxRoketMaxIrtifa";
-            this.txtBoxRoketMaxIrtifa.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketMaxIrtifa.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketMaxIrtifa.TabIndex = 30;
             // 
             // label44
             // 
             this.label44.AutoSize = true;
+            this.label44.BackColor = System.Drawing.Color.Black;
             this.label44.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label44.Location = new System.Drawing.Point(3, 47);
+            this.label44.Location = new System.Drawing.Point(3, -2);
             this.label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(67, 19);
@@ -1689,17 +1709,18 @@
             this.txtBoxRoketVelocity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketVelocity.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketVelocity.Location = new System.Drawing.Point(3, 20);
+            this.txtBoxRoketVelocity.Location = new System.Drawing.Point(3, 306);
             this.txtBoxRoketVelocity.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketVelocity.Name = "txtBoxRoketVelocity";
-            this.txtBoxRoketVelocity.Size = new System.Drawing.Size(138, 26);
+            this.txtBoxRoketVelocity.Size = new System.Drawing.Size(140, 26);
             this.txtBoxRoketVelocity.TabIndex = 79;
             // 
             // label33
             // 
             this.label33.AutoSize = true;
+            this.label33.BackColor = System.Drawing.Color.Black;
             this.label33.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label33.Location = new System.Drawing.Point(6, 0);
+            this.label33.Location = new System.Drawing.Point(5, 286);
             this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(31, 19);
@@ -1708,21 +1729,21 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtBoxRoketZaman);
             this.groupBox1.Controls.Add(this.label29);
-            this.groupBox1.Controls.Add(this.label33);
-            this.groupBox1.Controls.Add(this.txtBoxRoketVelocity);
-            this.groupBox1.Controls.Add(this.label44);
-            this.groupBox1.Controls.Add(this.txtBoxRoketMaxIrtifa);
+            this.groupBox1.Controls.Add(this.txtBoxRoketZaman);
+            this.groupBox1.Controls.Add(this.label18);
+            this.groupBox1.Controls.Add(this.label19);
+            this.groupBox1.Controls.Add(this.txtBoxRoketYaw);
             this.groupBox1.Controls.Add(this.uydu);
-            this.groupBox1.Controls.Add(this.txtBoxRoketGyroX);
+            this.groupBox1.Controls.Add(this.txtBoxRoketAngle);
             this.groupBox1.Controls.Add(this.txtBoxRoketUyduSayisi);
-            this.groupBox1.Controls.Add(this.GyroX);
-            this.groupBox1.Controls.Add(this.txtBoxRoketGyroZ);
-            this.groupBox1.Controls.Add(this.label62);
-            this.groupBox1.Controls.Add(this.txtBoxRoketGyroY);
-            this.groupBox1.Controls.Add(this.label65);
-            this.groupBox1.Location = new System.Drawing.Point(368, 24);
+            this.groupBox1.Controls.Add(this.txtBoxRoketRoll);
+            this.groupBox1.Controls.Add(this.label50);
+            this.groupBox1.Controls.Add(this.txtBoxRoketPitch);
+            this.groupBox1.Controls.Add(this.label51);
+            this.groupBox1.Controls.Add(this.txtBoxRoketChecksum);
+            this.groupBox1.Controls.Add(this.label52);
+            this.groupBox1.Location = new System.Drawing.Point(387, 36);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
@@ -1735,7 +1756,7 @@
             this.txtBoxRoketZaman.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxRoketZaman.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxRoketZaman.Location = new System.Drawing.Point(0, 309);
+            this.txtBoxRoketZaman.Location = new System.Drawing.Point(4, 19);
             this.txtBoxRoketZaman.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxRoketZaman.Name = "txtBoxRoketZaman";
             this.txtBoxRoketZaman.Size = new System.Drawing.Size(138, 26);
@@ -1744,8 +1765,9 @@
             // label29
             // 
             this.label29.AutoSize = true;
+            this.label29.BackColor = System.Drawing.Color.Black;
             this.label29.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label29.Location = new System.Drawing.Point(0, 287);
+            this.label29.Location = new System.Drawing.Point(3, -3);
             this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(58, 19);
@@ -1755,12 +1777,13 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label28.BackColor = System.Drawing.Color.Black;
+            this.label28.Font = new System.Drawing.Font("Segoe UI", 14F);
             this.label28.ForeColor = System.Drawing.Color.White;
-            this.label28.Location = new System.Drawing.Point(1058, 9);
+            this.label28.Location = new System.Drawing.Point(1130, 16);
             this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(94, 19);
+            this.label28.Size = new System.Drawing.Size(125, 25);
             this.label28.TabIndex = 97;
             this.label28.Text = "GÖREV YÜKÜ";
             // 
@@ -1771,27 +1794,28 @@
             this.groupBox2.Controls.Add(this.label43);
             this.groupBox2.Controls.Add(this.label45);
             this.groupBox2.Controls.Add(this.txtBoxGorevYukuZaman);
-            this.groupBox2.Controls.Add(this.txtBoxGorevYukuAngle);
             this.groupBox2.Controls.Add(this.txtBoxGorevYukuYaw);
             this.groupBox2.Controls.Add(this.label59);
+            this.groupBox2.Controls.Add(this.txtBoxGorevYukuAngle);
             this.groupBox2.Controls.Add(this.label63);
             this.groupBox2.Controls.Add(this.label66);
             this.groupBox2.Controls.Add(this.txtBoxGorevYukuRoll);
             this.groupBox2.Controls.Add(this.txtBoxGorevYukuPitch);
-            this.groupBox2.Location = new System.Drawing.Point(1030, 31);
+            this.groupBox2.Location = new System.Drawing.Point(1030, 48);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(146, 300);
+            this.groupBox2.Size = new System.Drawing.Size(146, 292);
             this.groupBox2.TabIndex = 96;
             this.groupBox2.TabStop = false;
             // 
             // label30
             // 
             this.label30.AutoSize = true;
+            this.label30.BackColor = System.Drawing.Color.Black;
             this.label30.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(5, 241);
+            this.label30.Location = new System.Drawing.Point(5, 46);
             this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(31, 19);
@@ -1803,7 +1827,7 @@
             this.txtBoxGorevYukuUyduSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxGorevYukuUyduSayisi.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxGorevYukuUyduSayisi.Location = new System.Drawing.Point(4, 71);
+            this.txtBoxGorevYukuUyduSayisi.Location = new System.Drawing.Point(5, 113);
             this.txtBoxGorevYukuUyduSayisi.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxGorevYukuUyduSayisi.Name = "txtBoxGorevYukuUyduSayisi";
             this.txtBoxGorevYukuUyduSayisi.Size = new System.Drawing.Size(138, 26);
@@ -1812,8 +1836,9 @@
             // label43
             // 
             this.label43.AutoSize = true;
+            this.label43.BackColor = System.Drawing.Color.Black;
             this.label43.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label43.Location = new System.Drawing.Point(4, 191);
+            this.label43.Location = new System.Drawing.Point(5, 233);
             this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(42, 19);
@@ -1823,9 +1848,10 @@
             // label45
             // 
             this.label45.AutoSize = true;
+            this.label45.BackColor = System.Drawing.Color.Black;
             this.label45.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label45.ForeColor = System.Drawing.Color.White;
-            this.label45.Location = new System.Drawing.Point(4, 144);
+            this.label45.Location = new System.Drawing.Point(5, 186);
             this.label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(46, 19);
@@ -1848,7 +1874,7 @@
             this.txtBoxGorevYukuAngle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxGorevYukuAngle.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtBoxGorevYukuAngle.Location = new System.Drawing.Point(3, 262);
+            this.txtBoxGorevYukuAngle.Location = new System.Drawing.Point(4, 66);
             this.txtBoxGorevYukuAngle.Margin = new System.Windows.Forms.Padding(2);
             this.txtBoxGorevYukuAngle.Name = "txtBoxGorevYukuAngle";
             this.txtBoxGorevYukuAngle.Size = new System.Drawing.Size(138, 26);
@@ -1857,9 +1883,10 @@
             // label59
             // 
             this.label59.AutoSize = true;
+            this.label59.BackColor = System.Drawing.Color.Black;
             this.label59.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label59.ForeColor = System.Drawing.Color.White;
-            this.label59.Location = new System.Drawing.Point(2, 50);
+            this.label59.Location = new System.Drawing.Point(3, 92);
             this.label59.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(89, 19);
@@ -1869,6 +1896,7 @@
             // label63
             // 
             this.label63.AutoSize = true;
+            this.label63.BackColor = System.Drawing.Color.Black;
             this.label63.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label63.ForeColor = System.Drawing.Color.White;
             this.label63.Location = new System.Drawing.Point(4, -2);
@@ -1881,9 +1909,10 @@
             // label66
             // 
             this.label66.AutoSize = true;
+            this.label66.BackColor = System.Drawing.Color.Black;
             this.label66.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label66.ForeColor = System.Drawing.Color.White;
-            this.label66.Location = new System.Drawing.Point(4, 96);
+            this.label66.Location = new System.Drawing.Point(5, 138);
             this.label66.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(37, 19);
@@ -1909,10 +1938,10 @@
             this.panel2.Controls.Add(this.statusPanel3);
             this.panel2.Controls.Add(this.statusPanel2);
             this.panel2.Controls.Add(this.statusPanel1);
-            this.panel2.Location = new System.Drawing.Point(446, 387);
+            this.panel2.Location = new System.Drawing.Point(546, 375);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(480, 399);
+            this.panel2.Size = new System.Drawing.Size(301, 399);
             this.panel2.TabIndex = 111;
             // 
             // statusLabel8
@@ -2062,7 +2091,7 @@
             // currentStatusLabel
             // 
             this.currentStatusLabel.AutoSize = true;
-            this.currentStatusLabel.Location = new System.Drawing.Point(130, 45);
+            this.currentStatusLabel.Location = new System.Drawing.Point(118, 41);
             this.currentStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.currentStatusLabel.Name = "currentStatusLabel";
             this.currentStatusLabel.Size = new System.Drawing.Size(41, 13);
@@ -2075,10 +2104,10 @@
             this.panel3.Controls.Add(this.gaugeAngle);
             this.panel3.Controls.Add(this.gaugeVoltage);
             this.panel3.Controls.Add(this.gaugeAltitude);
-            this.panel3.Location = new System.Drawing.Point(967, 375);
+            this.panel3.Location = new System.Drawing.Point(851, 375);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(175, 396);
+            this.panel3.Size = new System.Drawing.Size(175, 401);
             this.panel3.TabIndex = 112;
             // 
             // gaugeAngle
@@ -2138,13 +2167,34 @@
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Controls.Add(this.label15);
+            this.panel4.Controls.Add(this.panel7);
             this.panel4.Controls.Add(this.button4);
             this.panel4.Controls.Add(this.BtnMap);
-            this.panel4.Location = new System.Drawing.Point(672, 36);
+            this.panel4.Location = new System.Drawing.Point(672, 35);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(175, 253);
+            this.panel4.Size = new System.Drawing.Size(175, 260);
             this.panel4.TabIndex = 113;
+            // 
+            // panel7
+            // 
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel7.Location = new System.Drawing.Point(13, 138);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(145, 110);
+            this.panel7.TabIndex = 114;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Black;
+            this.label15.Location = new System.Drawing.Point(53, 154);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(67, 13);
+            this.label15.TabIndex = 16;
+            this.label15.Text = "Tema Başlığı";
             // 
             // panel5
             // 
@@ -2163,31 +2213,52 @@
             // 
             // panel6
             // 
+            this.panel6.BackColor = System.Drawing.Color.Black;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel6.Controls.Add(this.currentStatusLabel);
-            this.panel6.Location = new System.Drawing.Point(446, 794);
+            this.panel6.Location = new System.Drawing.Point(546, 778);
             this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(480, 108);
             this.panel6.TabIndex = 113;
+            // 
+            // panel8
+            // 
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel8.Controls.Add(this.label27);
+            this.panel8.Location = new System.Drawing.Point(643, 335);
+            this.panel8.Margin = new System.Windows.Forms.Padding(2);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(143, 39);
+            this.panel8.TabIndex = 115;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BackColor = System.Drawing.Color.Black;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label27.Location = new System.Drawing.Point(17, 7);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(106, 20);
+            this.label27.TabIndex = 115;
+            this.label27.Text = "Kontrol Paneli";
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(13)))), ((int)(((byte)(66)))));
-            this.ClientSize = new System.Drawing.Size(1856, 913);
+            this.ClientSize = new System.Drawing.Size(1856, 958);
+            this.Controls.Add(this.panel8);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label27);
             this.Controls.Add(this.btnApplyColor);
             this.Controls.Add(this.comboBoxColors);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.label15);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
@@ -2217,10 +2288,13 @@
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2286,7 +2360,6 @@
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.TextBox txtBoxGorevYukuVoltage;
         private System.Windows.Forms.TextBox txtBoxGorevYukuLongitude;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox txtBoxRoketCurrent;
@@ -2330,7 +2403,6 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.ComboBox comboBoxColors;
         private System.Windows.Forms.Button btnApplyColor;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label65;
         private System.Windows.Forms.TextBox txtBoxRoketGyroY;
         private System.Windows.Forms.Label label62;
@@ -2395,5 +2467,9 @@
         private System.Windows.Forms.Label statusLabel8;
         private System.Windows.Forms.Panel statusPanel8;
         private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label label27;
     }
 }

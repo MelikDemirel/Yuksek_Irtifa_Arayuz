@@ -288,12 +288,16 @@ namespace GokhanUI
                     updates.Add(() => txtBoxRoketGpsEnlem.Text = _serialReader.Latitude.ToString("F6"));
                 if (txtBoxRoketGpsBoylam.Text != _serialReader.Longitude.ToString("F6"))
                     updates.Add(() => txtBoxRoketGpsBoylam.Text = _serialReader.Longitude.ToString("F6"));
-                if (txtRoketTemperature.Text != _serialReader.Temperature.ToString("F2"))
-                    updates.Add(() => txtRoketTemperature.Text = _serialReader.Temperature.ToString("F2"));
+                // Sıcaklık - derece C işareti ile
+                if (txtRoketTemperature.Text != $"{_serialReader.Temperature:F2} °C")
+                    updates.Add(() => txtRoketTemperature.Text = $"{_serialReader.Temperature:F2} °C");
+
                 if (txtRoketHumidity.Text != _serialReader.Humidity.ToString())
                     updates.Add(() => txtRoketHumidity.Text = _serialReader.Humidity.ToString());
-                if (txtBoxRoketAngle.Text != _serialReader.Angle.ToString("F2"))
-                    updates.Add(() => txtBoxRoketAngle.Text = _serialReader.Angle.ToString("F2"));
+                // Açı - derece işareti ile
+                if (txtBoxRoketAngle.Text != $"{_serialReader.Angle:F2} °")
+                    updates.Add(() => txtBoxRoketAngle.Text = $"{_serialReader.Angle:F2} °");
+
                 if (txtBoxRoketChecksum.Text != _serialReader.CRC.ToString())
                     updates.Add(() => txtBoxRoketChecksum.Text = _serialReader.CRC.ToString());
                 if (txtBoxRoketVelocity.Text != _serialReader.Velocity.ToString("F2"))
@@ -383,10 +387,10 @@ namespace GokhanUI
                 txtBoxGorevYukuGyroY.Text = _gorevYukuReader.GyroY.ToString("F2");
             if (txtBoxGorevYukuGyroZ.Text != _gorevYukuReader.GyroZ.ToString("F2"))
                 txtBoxGorevYukuGyroZ.Text = _gorevYukuReader.GyroZ.ToString("F2");
-            if (txtBoxGorevYukuTemperature.Text != _gorevYukuReader.Temperature.ToString("F2"))
-                txtBoxGorevYukuTemperature.Text = _gorevYukuReader.Temperature.ToString("F2");
-            if (txtBoxGorevYukuAngle.Text != _gorevYukuReader.Angle.ToString())
-                txtBoxGorevYukuAngle.Text = _gorevYukuReader.Angle.ToString();
+            if (txtBoxGorevYukuTemperature.Text != $"{_gorevYukuReader.Temperature:F2} °C")
+                txtBoxGorevYukuTemperature.Text = $"{_gorevYukuReader.Temperature:F2} °C";
+            if (txtBoxGorevYukuAngle.Text != $"{_gorevYukuReader.Angle:F2} °")
+                txtBoxGorevYukuAngle.Text = $"{_gorevYukuReader.Angle:F2} °";
             if (txtBoxGorevYukuUyduSayisi.Text != _gorevYukuReader.SatelliteCount.ToString())
                 txtBoxGorevYukuUyduSayisi.Text = _gorevYukuReader.SatelliteCount.ToString();
         }
@@ -503,55 +507,86 @@ namespace GokhanUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (_dataSender != null && _dataSender.IsSending)
+            try
             {
-                _dataSender.StopSending();
+                // Eğer şu anda canlı gönderim varsa: DURDUR
+                if (_dataSender != null && _dataSender.IsSending)
+                {
+                    _dataSender.StopSending();
+                    button1.Text = "Başlat";
+                    button1.BackColor = Color.Lime;
+                    button7.Enabled = true;      // Dummy tekrar aktif
+                    return;
+                }
+
+                // Gerekli alanlar dolu mu?
+                if (comboBox3.SelectedItem == null || comboBox2.SelectedItem == null || string.IsNullOrWhiteSpace(textBox1.Text))
+                {
+                    MessageBox.Show("Lütfen port, baudrate ve takım ID bilgilerini girin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (!byte.TryParse(textBox1.Text, out byte teamID))
+                {
+                    MessageBox.Show("Geçerli bir takım ID girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string selectedPort = comboBox3.SelectedItem.ToString();
+                int selectedBaudRate = int.Parse(comboBox2.SelectedItem.ToString());
+
+                // Yeni DataSender oluştur
+                _dataSender = new DataSender(selectedPort, selectedBaudRate);
+
+                // CANLI GÖNDERİM — sadece veri değişince gönder + heartbeat
+                _dataSender.StartStreamingOnChange(
+                    teamID,
+                    () => new TelemetrySnapshot
+                    {
+                        Altitude = _serialReader != null ? _lastAltitude : 0,
+                        GPSAltitude = _serialReader != null ? _lastGPSAltitude : 0,
+                        Lat = _serialReader != null ? _lastLatitude : 38.3687f, // fallback Aksaray
+                        Lon = _serialReader != null ? _lastLongitude : 34.0360f, // fallback Aksaray
+                        MissionGpsAlt = _gorevYukuReader != null ? _lastGorevYukuGPSAltitude : 0,
+                        MissionLat = _gorevYukuReader != null ? _lastGorevYukuLatitude : 38.3687f,
+                        MissionLon = _gorevYukuReader != null ? _lastGorevYukuLongitude : 34.0360f,
+                        StageGpsAlt = 0,
+                        StageLat = 0,
+                        StageLon = 0,
+                        GyroX = _serialReader != null ? _lastPitch : 0,
+                        GyroY = _serialReader != null ? _lastRoll : 0,
+                        GyroZ = _serialReader != null ? _lastYaw : 0,
+                        AccX = _serialReader != null ? _lastAccelX : 0,
+                        AccY = _serialReader != null ? _lastAccelY : 0,
+                        AccZ = _serialReader != null ? _lastAccelZ : 0,
+                        Angle = _serialReader != null ? _lastAngle : 0,
+                        Status = _serialReader != null ? _lastStatus : (byte)1
+                    },
+                    checkIntervalMs: 50,     // veriyi 50 ms'de bir kontrol et
+                    minSendIntervalMs: 40,   // iki gönderim arası minimum 40 ms
+                    maxHeartbeatMs: 1000     // veri değişmese de en geç 1 sn'de bir paket
+                );
+
+                // UI güncelle
+                button1.Text = "Durdur";
+                button1.BackColor = Color.Red;
+                button7.Enabled = false;        // Dummy devre dışı
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show($"Port erişim hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // UI geri al
                 button1.Text = "Başlat";
                 button1.BackColor = Color.Lime;
-                return;
+                button7.Enabled = true;
             }
-
-            if (comboBox3.SelectedItem == null || comboBox2.SelectedItem == null || string.IsNullOrWhiteSpace(textBox1.Text))
+            catch (Exception ex)
             {
-                MessageBox.Show("Lütfen port, baudrate ve takım ID bilgilerini girin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show($"Canlı veri gönderimi başlatılamadı: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // UI geri al
+                button1.Text = "Başlat";
+                button1.BackColor = Color.Lime;
+                button7.Enabled = true;
             }
-            if (!byte.TryParse(textBox1.Text, out byte teamID))
-            {
-                MessageBox.Show("Geçerli bir takım ID girin.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string selectedPort = comboBox3.SelectedItem.ToString();
-            int selectedBaudRate = int.Parse(comboBox2.SelectedItem.ToString());
-
-            _dataSender = new DataSender(selectedPort, selectedBaudRate);
-
-            // CANLI YENİLENEN GÖNDERİM
-            _dataSender.StartStreaming(teamID, () => new TelemetrySnapshot
-            {
-                Altitude = _serialReader != null ? _lastAltitude : 0,
-                GPSAltitude = _serialReader != null ? _lastGPSAltitude : 0,
-                Lat = _serialReader != null ? _lastLatitude : 0,
-                Lon = _serialReader != null ? _lastLongitude : 0,
-                MissionGpsAlt = _gorevYukuReader != null ? _lastGorevYukuGPSAltitude : 0,
-                MissionLat = _gorevYukuReader != null ? _lastGorevYukuLatitude : 0,
-                MissionLon = _gorevYukuReader != null ? _lastGorevYukuLongitude : 0,
-                StageGpsAlt = 0,
-                StageLat = 0,
-                StageLon = 0,
-                GyroX = _serialReader != null ? _lastPitch : 0,
-                GyroY = _serialReader != null ? _lastRoll : 0,
-                GyroZ = _serialReader != null ? _lastYaw : 0,
-                AccX = _serialReader != null ? _lastAccelX : 0,
-                AccY = _serialReader != null ? _lastAccelY : 0,
-                AccZ = _serialReader != null ? _lastAccelZ : 0,
-                Angle = _serialReader != null ? _lastAngle : 0,
-                Status = _serialReader != null ? _lastStatus : (byte)0
-            });
-
-            button1.Text = "Durdur";
-            button1.BackColor = Color.Red;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -568,6 +603,7 @@ namespace GokhanUI
 
         private void button7_Click(object sender, EventArgs e)
         {
+
             if (comboBox3.SelectedItem == null || comboBox2.SelectedItem == null || string.IsNullOrWhiteSpace(textBox1.Text))
             {
                 MessageBox.Show("Lütfen port, baudrate ve takım ID bilgilerini girin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -587,27 +623,28 @@ namespace GokhanUI
             // TEK SEFERLİK DUMMY
             _dataSender.SendOnce(
                 teamID,
-                100.50f,  // altitude
-                105.25f,  // gpsAltitude
-                39.9256f, // lat
-                32.8351f, // lon
-                102.75f,  // missionGpsAlt
-                39.9257f, // missionLat
-                32.8352f, // missionLon
+                1f,  // altitude
+                1f,  // gpsAltitude
+                1f, // lat
+                1f, // lon
+                1f,  // missionGpsAlt
+                38.3687f, // missionLat
+                34.0360f,   // missionLon
                 0, 0, 0,  // stageGpsAlt, stageLat, stageLon
-                10.5f,    // gyroX
-                5.2f,     // gyroY
-                -3.1f,    // gyroZ
-                0.5f,     // accX
-                0.3f,     // accY
-                9.8f,     // accZ
-                15.0f,    // angle
+                1f,    // gyroX
+                1f,     // gyroY
+                1f,    // gyroZ
+                1f,     // accX
+                1f,     // accY
+                1f,     // accZ
+                1f,    // angle
                 (byte)1,  // status
                 closeAfter: true
             );
 
-            MessageBox.Show("Dummy veri bir kez gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+
 
         private void button6_Click(object sender, EventArgs e)
         {
@@ -620,7 +657,6 @@ namespace GokhanUI
             comboBox3.Items.AddRange(ports);
             comboBox6.Items.AddRange(ports);
 
-            MessageBox.Show("COM portları yenilendi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -670,7 +706,6 @@ namespace GokhanUI
             Properties.Settings.Default.Save();
             comboBoxColors.SelectedIndex = -1;
 
-            MessageBox.Show("Tüm veriler ve portlar temizlendi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void UpdateRocketStatus(byte status)
         {
@@ -800,6 +835,6 @@ namespace GokhanUI
             }
         }
 
-      
+       
     }
 }

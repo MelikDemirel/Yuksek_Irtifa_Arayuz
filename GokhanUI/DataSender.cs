@@ -90,8 +90,7 @@ namespace Youtube3D_Simulasyon
         }
 
         /// <summary>
-        /// Geriye dönük uyumluluk: sabit snapshot'ı 1sn aralıkla tekrar tekrar gönderir.
-        /// Canlı veri isteniyorsa StartStreaming kullan.
+        /// Sabit snapshot'ı periyodik gönderir (geri uyumluluk).
         /// </summary>
         public void StartSending(
             byte teamID, float altitude, float gpsAltitude, float lat, float lon,
@@ -141,7 +140,7 @@ namespace Youtube3D_Simulasyon
         }
 
         /// <summary>
-        /// Her periyotta taze veri alınmasını sağlayan canlı akış.
+        /// Her periyotta provider'dan taze veri alır ve periyodik olarak yollar.
         /// </summary>
         public void StartStreaming(byte teamID, Func<TelemetrySnapshot> provider, int periodMs = 1000)
         {
@@ -188,6 +187,114 @@ namespace Youtube3D_Simulasyon
             });
         }
 
+        /// <summary>
+        /// --- YENİ ---
+        /// Veri değiştiğinde hemen gönderir. Küçük dalgalanmaları yutmak için epsilon eşikleri,
+        /// portu boğmamak için min interval ve senkron takibi için heartbeat içerir.
+        /// </summary>
+        public void StartStreamingOnChange(
+            byte teamID,
+            Func<TelemetrySnapshot> provider,
+            int checkIntervalMs = 50,
+            int minSendIntervalMs = 40,
+            int maxHeartbeatMs = 1000,
+            float epsAlt = 0.01f,
+            float epsGpsAlt = 0.01f,
+            float epsLatLon = 0.00001f, // ~1 m civarı
+            float epsIMU = 0.001f,
+            float epsAngle = 0.01f)
+        {
+            if (provider == null) throw new ArgumentNullException(nameof(provider));
+            if (_sending) return;
+
+            Open();
+            _cts = new CancellationTokenSource();
+            _sending = true;
+
+            Task.Run(async () =>
+            {
+                TelemetrySnapshot lastSent = null;
+                var lastSendTime = DateTime.UtcNow.AddYears(-1);
+
+                try
+                {
+                    while (!_cts.IsCancellationRequested)
+                    {
+                        var cur = provider();
+                        bool shouldSend = false;
+
+                        if (lastSent == null)
+                        {
+                            shouldSend = true; // ilk paket
+                        }
+                        else
+                        {
+                            shouldSend =
+                                Changed(lastSent.Altitude, cur.Altitude, epsAlt) ||
+                                Changed(lastSent.GPSAltitude, cur.GPSAltitude, epsGpsAlt) ||
+                                Changed(lastSent.Lat, cur.Lat, epsLatLon) ||
+                                Changed(lastSent.Lon, cur.Lon, epsLatLon) ||
+                                Changed(lastSent.MissionGpsAlt, cur.MissionGpsAlt, epsGpsAlt) ||
+                                Changed(lastSent.MissionLat, cur.MissionLat, epsLatLon) ||
+                                Changed(lastSent.MissionLon, cur.MissionLon, epsLatLon) ||
+                                Changed(lastSent.StageGpsAlt, cur.StageGpsAlt, epsGpsAlt) ||
+                                Changed(lastSent.StageLat, cur.StageLat, epsLatLon) ||
+                                Changed(lastSent.StageLon, cur.StageLon, epsLatLon) ||
+                                Changed(lastSent.GyroX, cur.GyroX, epsIMU) ||
+                                Changed(lastSent.GyroY, cur.GyroY, epsIMU) ||
+                                Changed(lastSent.GyroZ, cur.GyroZ, epsIMU) ||
+                                Changed(lastSent.AccX, cur.AccX, epsIMU) ||
+                                Changed(lastSent.AccY, cur.AccY, epsIMU) ||
+                                Changed(lastSent.AccZ, cur.AccZ, epsIMU) ||
+                                Changed(lastSent.Angle, cur.Angle, epsAngle) ||
+                                lastSent.Status != cur.Status;
+                        }
+
+                        var now = DateTime.UtcNow;
+                        var sinceLast = (now - lastSendTime).TotalMilliseconds;
+
+                        // rate-limit
+                        if (sinceLast < minSendIntervalMs)
+                            shouldSend = false;
+
+                        // heartbeat
+                        if (!shouldSend && sinceLast >= maxHeartbeatMs)
+                            shouldSend = true;
+
+                        if (shouldSend)
+                        {
+                            var buffer = BuildPacket(teamID,
+                                cur.Altitude, cur.GPSAltitude, cur.Lat, cur.Lon,
+                                cur.MissionGpsAlt, cur.MissionLat, cur.MissionLon,
+                                cur.StageGpsAlt, cur.StageLat, cur.StageLon,
+                                cur.GyroX, cur.GyroY, cur.GyroZ,
+                                cur.AccX, cur.AccY, cur.AccZ,
+                                cur.Angle, cur.Status);
+
+                            lock (_gate)
+                            {
+                                if (_serialPort.IsOpen)
+                                    _serialPort.Write(buffer, 0, buffer.Length);
+
+                                _counter = (byte)((_counter + 1) & 0xFF);
+                            }
+
+                            lastSent = cur.Clone();
+                            lastSendTime = now;
+                        }
+
+                        await Task.Delay(checkIntervalMs, _cts.Token).ConfigureAwait(false);
+                    }
+                }
+                catch (TaskCanceledException) { /* normal stop */ }
+                finally
+                {
+                    _sending = false;
+                    Close();
+                }
+            });
+        }
+
         // --- paketleme ---
 
         private byte[] BuildPacket(byte teamID, float altitude, float gpsAltitude, float lat, float lon,
@@ -197,7 +304,6 @@ namespace Youtube3D_Simulasyon
                                    float accX, float accY, float accZ,
                                    float angle, byte status)
         {
-            // Önceki sürümle birebir aynı düzen ve uzunluk:
             // [0]=FF [1]=FF [2]=54 [3]=52 [4]=teamID [5]=counter
             // 17 float (68 byte) + status + checksum + CR LF = toplam 78 byte
             var buffer = new byte[78];
@@ -229,7 +335,7 @@ namespace Youtube3D_Simulasyon
             AppendFloat(buffer, ref i, angle);
 
             buffer[i++] = status;
-            buffer[i++] = CalculateChecksum(buffer); // sum of [4..74] % 256 (eski implementasyona sadık)
+            buffer[i++] = CalculateChecksum(buffer); // sum of [4..74] % 256
             buffer[i++] = 0x0D; // CR
             buffer[i++] = 0x0A; // LF
 
@@ -250,6 +356,8 @@ namespace Youtube3D_Simulasyon
                 sum += buffer[k];
             return (byte)(sum & 0xFF);
         }
+
+        private static bool Changed(float a, float b, float eps) => Math.Abs(a - b) > eps;
     }
 
     // Canlı akış için taze snapshot taşıyıcısı
@@ -262,5 +370,27 @@ namespace Youtube3D_Simulasyon
         public float AccX, AccY, AccZ;
         public float Angle;
         public byte Status;
+
+        public TelemetrySnapshot Clone() => new TelemetrySnapshot
+        {
+            Altitude = Altitude,
+            GPSAltitude = GPSAltitude,
+            Lat = Lat,
+            Lon = Lon,
+            MissionGpsAlt = MissionGpsAlt,
+            MissionLat = MissionLat,
+            MissionLon = MissionLon,
+            StageGpsAlt = StageGpsAlt,
+            StageLat = StageLat,
+            StageLon = StageLon,
+            GyroX = GyroX,
+            GyroY = GyroY,
+            GyroZ = GyroZ,
+            AccX = AccX,
+            AccY = AccY,
+            AccZ = AccZ,
+            Angle = Angle,
+            Status = Status
+        };
     }
 }

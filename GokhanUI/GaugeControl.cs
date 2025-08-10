@@ -94,11 +94,15 @@ namespace GokhanUI
             // Caption
             if (!string.IsNullOrEmpty(Caption))
             {
-                var capSize = g.MeasureString(Caption, Font);
-                g.DrawString(Caption, Font, Brushes.Gray,
-                    (Width - capSize.Width) / 2f,
-                    Height - capSize.Height - 2f);
+                using (var captionFont = new Font(Font.FontFamily, Font.Size + 2.5f, FontStyle.Regular))
+                {
+                    var capSize = g.MeasureString(Caption, captionFont);
+                    g.DrawString(Caption, captionFont, Brushes.White,
+                        (Width - capSize.Width) / 2f,
+                        Height - capSize.Height - 2f);
+                }
             }
+
         }
     }
 }
