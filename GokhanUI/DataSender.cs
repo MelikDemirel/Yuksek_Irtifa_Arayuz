@@ -3,7 +3,7 @@ using System.IO.Ports;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Youtube3D_Simulasyon
+namespace GokhanUI
 {
     public sealed class DataSender
     {

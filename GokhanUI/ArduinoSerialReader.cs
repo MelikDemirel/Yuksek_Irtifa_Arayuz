@@ -12,6 +12,7 @@ namespace GokhanUI
         private DateTime _lastDataReceived = DateTime.Now;
         private readonly TimeSpan _timeout = TimeSpan.FromSeconds(5);
         private const int PacketSize = 64;
+        private readonly object _lock = new object(); // Okuma için kilit
 
         public byte Status { get; private set; }
         public float Voltage { get; private set; }
@@ -56,12 +57,12 @@ namespace GokhanUI
                 {
                     _serialPort.Open();
                     _serialPort.DiscardInBuffer();
-                    Console.WriteLine("🟢 Roket bağlantısı açıldı.");
+                    Console.WriteLine("Roket baglantisi acildi.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"⚠ Seri port açılırken hata oluştu: {ex.Message}");
+                Console.WriteLine($"Seri port acilirken hata olustu: {ex.Message}");
             }
         }
 
@@ -70,27 +71,30 @@ namespace GokhanUI
             if (_serialPort?.IsOpen ?? false)
             {
                 _serialPort.Close();
-                Console.WriteLine("🔴 Roket bağlantısı kapatıldı.");
+                Console.WriteLine("Roket baglantisi kapatildi.");
             }
         }
 
-        private async void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        // Reset veya gürültü sonrası buffer temizleme için ek metod
+        public void ClearBuffer()
         {
-            if (_serialPort == null || !_serialPort.IsOpen)
+            if (_serialPort?.IsOpen ?? false)
             {
-                Console.WriteLine("⚠ Port kapalı, yeniden bağlanma deneniyor.");
-                try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
-                return;
+                _serialPort.DiscardInBuffer();
+                Console.WriteLine("Buffer manuel temizlendi.");
             }
+        }
 
-            await Task.Run(() =>
+        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            lock (_lock) // Tek thread erişimi için kilit
             {
                 try
                 {
-                    // Buffer kontrolünü daha sık yap
+                    // Buffer kontrolü
                     if (_serialPort.BytesToRead > PacketSize * 5)
                     {
-                        Console.WriteLine("⚠ Buffer doluyor, temizleniyor.");
+                        Console.WriteLine("Buffer doluyor, temizleniyor.");
                         _serialPort.DiscardInBuffer();
                     }
 
@@ -102,66 +106,91 @@ namespace GokhanUI
 
                         if (bytesRead != PacketSize)
                         {
-                            Console.WriteLine($"⚠ Eksik veri alındı: {bytesRead} bayt.");
+                            Console.WriteLine($"Eksik veri alindi: {bytesRead} bayt.");
                             continue;
                         }
 
-                        if (buffer[0] == 0xFF && buffer[PacketSize - 2] == 0x0D && buffer[PacketSize - 1] == 0x0A)
+                        // Başlık ve bitiş kontrolü + hizalama düzeltme
+                        if (buffer[0] != 0xFF)
                         {
-                            byte receivedCrc = buffer[PacketSize - 3];
-                            byte calculatedCrc = CalculateChecksum(buffer, 1, PacketSize - 4);
+                            Console.WriteLine("Paket baslangici hatali. Hizalama duzeltmesi deneniyor.");
+                            bool resynced = false;
+                            for (int j = 1; j < bytesRead; j++)
+                            {
+                                if (buffer[j] == 0xFF)
+                                {
+                                    int remaining = bytesRead - j;
+                                    byte[] newBuffer = new byte[PacketSize];
+                                    Array.Copy(buffer, j, newBuffer, 0, remaining);
 
-                            if (receivedCrc == calculatedCrc)
-                            {
-                                ParseData(buffer);
-                                DataUpdated?.Invoke();
+                                    int additionalRead = _serialPort.Read(newBuffer, remaining, PacketSize - remaining);
+                                    if (additionalRead + remaining == PacketSize)
+                                    {
+                                        buffer = newBuffer;
+                                        resynced = true;
+                                        Console.WriteLine("Hizalama duzeltildi.");
+                                        break;
+                                    }
+                                }
                             }
-                            else
+                            if (!resynced || buffer[0] != 0xFF)
                             {
-                                Console.WriteLine("❌ CRC hatası: Paket bozuk.");
-                                _serialPort.DiscardInBuffer();
                                 continue;
                             }
                         }
-                        else
+
+                        if (buffer[PacketSize - 2] != 0x0D || buffer[PacketSize - 1] != 0x0A)
                         {
-                            Console.WriteLine("⚠ Paket yapısı geçersiz.");
-                            _serialPort.DiscardInBuffer();
+                            Console.WriteLine("Paket bitisi hatali.");
                             continue;
                         }
+
+                        // CRC kontrolü
+                        byte receivedCrc = buffer[PacketSize - 3];
+                        byte calculatedCrc = CalculateChecksum(buffer, 1, PacketSize - 4);
+
+                        if (receivedCrc != calculatedCrc)
+                        {
+                            Console.WriteLine($"CRC hatasi: Alinan {receivedCrc}, Hesaplanan {calculatedCrc}");
+                            continue;
+                        }
+
+                        // Veriyi parse et
+                        ParseData(buffer);
+                        DataUpdated?.Invoke();
+                        Console.WriteLine("Gecerli paket parse edildi.");
                     }
 
+                    // Timeout kontrolü
                     if (DateTime.Now - _lastDataReceived > _timeout)
                     {
-                        Console.WriteLine("⚠ Veri akışı kesildi, port kontrol ediliyor.");
-                        Close();
-                        try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
+                        Console.WriteLine("Veri akisi kesildi, port kontrol ediliyor.");
+                        // Yeniden bağlanma yerine loglama, gerekirse UI'dan manuel müdahale
                     }
                 }
                 catch (IOException ioex)
                 {
-                    Console.WriteLine($"⚠ IO Hatası: {ioex.Message}");
-                    Close();
-                    try { Open(); } catch (Exception ex) { Console.WriteLine($"⚠ Yeniden bağlanma başarısız: {ex.Message}"); }
+                    Console.WriteLine($"IO Hatasi: {ioex.Message}");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"⚠ Veri ayrıştırılamadı: {ex.Message}");
+                    Console.WriteLine($"Veri ayristirilamadi: {ex.Message}");
                 }
-            });
+            }
         }
+
         private void ParseData(byte[] buffer)
         {
             int i = 0;
 
-            byte basla = buffer[i++];
+            byte basla = buffer[i++]; // 0xFF
             byte zaman = buffer[i++];
             byte durum = buffer[i++];
 
-            byte rawTemp = buffer[i++];
+            float rawTemp = buffer[i++];
             Temperature = rawTemp / 2.0f;
 
-            float HamVoltage = BitConverter.ToUInt16(buffer, i); i += 2;
+            float hamVoltage = BitConverter.ToUInt16(buffer, i); i += 2;
             Current = BitConverter.ToUInt16(buffer, i); i += 2;
 
             Altitude = BitConverter.ToSingle(buffer, i); i += 4;
@@ -189,8 +218,8 @@ namespace GokhanUI
             byte uyduData = buffer[i++];
 
             CRC = buffer[i++];
-            byte cr = buffer[i++];
-            byte lf = buffer[i++];
+            byte cr = buffer[i++]; // 0x0D
+            byte lf = buffer[i++]; // 0x0A
 
             int dakika = zaman >> 2;
             int saniye = ((zaman & 0x03) << 4) | (durum >> 4);
@@ -210,7 +239,7 @@ namespace GokhanUI
             Yaw = rawYaw * signYaw;
 
             SatelliteCount = (byte)(uyduData >> 3);
-            Voltage = HamVoltage / 100;
+            Voltage = hamVoltage / 100;
         }
 
         private byte CalculateChecksum(byte[] data, int start, int end)
